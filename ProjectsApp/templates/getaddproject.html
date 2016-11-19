@@ -1,0 +1,34 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="panel panel-default">
+			<form method="post" action="/addproject" class="panel-body validate">
+				{% csrf_token %}
+				<h2 style="color:blue;">Create A Project</h2>
+				<label for="name">Project Name</label>
+				<input style="width:500px !important;" type="text" name="name" id="name" placeholder="Project Name" class="form-control" data-bvalidator="required" data-bvalidator-msg="Project Name Required">
+				<br>
+				<label for="start">Start Date</label>
+				<input type="text" name="start" id="start" placeholder="YYYY-MM-DD" class="datepicker" data-bvalidator="required" data-bvalidator-msg="Start Date Required">
+				<label style="margin-left:15px" for="end">End Date</label>
+				<input type="text" name="end" id="end" placeholder="YYYY-MM-DD" class="datepicker" data-bvalidator="required" data-bvalidator-msg="Start Date Required">
+				<br>
+				<br>
+				<label for="description">Description</label>
+				<textarea style="width:800px;" rows="4" name="description" id="description" placeholder="Description" class="form-control" data-bvalidator="required" data-bvalidator-msg="Description Required"></textarea>
+				<br>
+				<label for="knowlegde">Required Knowledge</label>
+				<textarea style="width:800px;" rows="3" name="knowledge" id="knowledge" placeholder="ex) Java, Windows, SQL, ..." class="form-control" data-bvalidator="required" data-bvalidator-msg="Must Have At Least One Field For 'Required Knowledge'"></textarea>
+				<br>
+				<label for="experience">Experience</label>
+				<input type="text" name="experience" id="experience" placeholder="ex) bachelors degree, 2 years in related field, ..." class="form-control" data-bvalidator="required" data-bvalidator-msg="Experience Required">
+				<br>
+				<input type="submit" name="Submit" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

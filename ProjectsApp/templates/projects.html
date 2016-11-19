@@ -5,21 +5,36 @@
 	<!-- Content -->
 	<div class="container" role="main">
 		<div class="table-responsive">
+			<h2 style="color:blue;">Projects</h2>
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
-						<th>Project Name</th>
+						<th style="cursor:pointer;">Project Name</th>
+						<th style="cursor:pointer;">Start Date</th>
+						<th style="cursor:pointer;">End Date</th>
+						<th style="cursor:pointer;">Description</th>
+						<th style="cursor:pointer;">Previous Knowledge</th>
+						<th style="cursor:pointer;">Experience</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for project in projects %}
 					<tr>
-						<td>{{ project.name }}</td>
+						<td><a href="/project?name={{ project.name }}">{{ project.name }}</a></td>
+						<td>{{ project.start }}</td>
+						<td>{{ project.end }}</td>
+						<td>{{ project.description }}</td>
+						<td>{{ project.knowledge }}</td>
+						<td>{{ project.experience }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
+		<form method="post" action="/getaddproject">
+			{% csrf_token %}
+			<input type="submit" value="Add Project" class="btn btn-primary">
+		</form>
 	</div>
 
 {% endblock %}

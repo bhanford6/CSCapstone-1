@@ -5,9 +5,21 @@
 	<!-- Content -->
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
-			<h1>Project</h1>
-			<p>Description</p>
+			<h1>{{ project.name }}</h1>
+			<p>{{ project.description }}</p>
 		</div>
+		<h3>Duration:</h3>
+		<p>Start Date:{{ project.start }}</p>
+		<p>End Date:{{ project.end }}</p>
+		<br>
+		<h3>Required Experience:</h3>
+		<p>{{ project.experience }}</p>
+		<br>
+		<h3>Expected Skills:</h3>
+		<p>{{ project.knowledge }}</p>
+		<br>
+		<br>
+
 	</div>
 
 {% endblock %}

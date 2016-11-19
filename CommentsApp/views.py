@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from .import models
-from .import forms
+from . import models
+from . import forms
 def getComments(request):
     comments_list = models.Comment.objects.all()
     context = {
@@ -11,6 +11,7 @@ def getComments(request):
 
 def getCommentForm(request):
     return render(request, 'commentForm.html')
+
 def addComment(request):
     if request.method == 'POST':
         form = forms.CommentForm(request.POST)

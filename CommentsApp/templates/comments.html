@@ -20,5 +20,9 @@
                 </tbody>
             </table>
         </div>
+				<form method="post" enctype="multipart/form-data" action="/commentform" class="panel-body validate">
+				{% csrf_token %}
+					<input type="submit" value="Add Comment" class="btn btn-primary">
+				</form>
     </div>
 {% endblock %}
