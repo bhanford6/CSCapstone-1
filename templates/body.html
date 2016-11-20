@@ -20,28 +20,40 @@
 					<li><a href="/login">Login</a></li>
 					<li><a href="/register">Register</a></li>
 				{% else %}
-					<li><a href="/update">Update Profile</a></li>
-					<li role="presentation" class="dropdown">
+					<li role="presenttaion" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-						  Groups/Organizations <span class="caret"></span>
+							User<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
+							<li><a href="/update">Update Profile</a></li>
+							<li><a href="/student/form">Edit Page</a></li>
+							<li><a href="/student">View Page</a></li>
+						</ul>
+					<li role="presentation" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						  Search<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/student/all">Students</a></li>
+							<li><a href="/professor/all">Professors</a></li>
+							<li><a href="/engineer/all">Engineers</a></li>
 							<li><a href="/company/all">Companies</a></li>
 							<li><a href="/university/all">Universities</a></li>
 							<li><a href="/group/all">Groups</a></li>
+							<li><a href="/project/all">Projects</a></li>
 						</ul>
 					</li>
 					<li role="presentation" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-						  Create new Group/Organization <span class="caret"></span>
+						  Create<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
 							<li><a href="/company/form">Create Company</a></li>
 							<li><a href="/university/form">Create University</a></li>
 							<li><a href="/group/form">Create Group</a></li>
+							<li><a href="/project/form">Create Project</a></li>
 						</ul>
 					</li>
-					<li><a href="/project/all">Projects</a></li>
 					<li><a href="/comments">Comments</a></li>
 					<li><a href="/logout">Logout</a></li>
 				{% endif %}

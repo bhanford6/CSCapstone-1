@@ -20,10 +20,11 @@ class RegisterForm(forms.Form):
 
     firstname = forms.CharField(label="First name", widget=forms.TextInput, required=False)
     lastname = forms.CharField(label="Last name", widget=forms.TextInput, required=False)
+    university = forms.CharField(label="University", widget=forms.TextInput, required=False)
 
     student = forms.NullBooleanField(label="Is student?", widget=forms.NullBooleanSelect, required=False)
     professor = forms.NullBooleanField(label="Is professor?", widget=forms.NullBooleanSelect, required=False)
-    engineer = forms.NullBooleanField(label="Is engineer?", widget=forms.NullBooleanSelect, required=False)                
+    engineer = forms.NullBooleanField(label="Is engineer?", widget=forms.NullBooleanSelect, required=False)               
 
     def clean_password2(self):
         # Check that the two password entries match
