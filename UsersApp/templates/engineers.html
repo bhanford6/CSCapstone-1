@@ -1,0 +1,33 @@
+{% extends "body.html" %}
+{% block content %}
+
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue">Professors</h2>
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="width:15%;cursor:pointer">Name</th>
+						<th style="width:50%;cursor:pointer">Company</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for engineer in engineers %}
+					<tr id="row" style="cursor:pointer">
+					{% if engineer.is_engineer %}
+						<td><a href="/engineer?name={{ engineer.uname }}">{{ engineer.get_full_name }}</a></td>
+					<tr>
+					{% endif %}
+					<tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<style>
+		#row:hover {
+			background-color:#a7b3c6;
+		}
+	</style>
+{% endblock %}

@@ -1,6 +1,5 @@
 """
 UniversitiesApp Views
-
 Created by Jacob Dunbar on 11/5/2016.
 """
 from django.shortcuts import render
@@ -23,9 +22,16 @@ def getUniversity(request):
         in_name = request.GET.get('name', 'None')
         in_university = models.University.objects.get(name__exact=in_name)
         is_member = in_university.members.filter(email__exact=request.user.email)
+        universities_list = models.University.objects.all()
+        joinable = True
+        for university in universities_list:
+            if university.members.filter(email__exact=request.user.email):
+                joinable = False
+
         context = {
-            'university' : in_university,
-            'userIsMember': is_member,
+            'joinable'      : joinable,
+            'university'    : in_university,
+            'userIsMember'  : is_member,
         }
         return render(request, 'university.html', context)
     # render error page if user is not logged in
@@ -90,21 +96,38 @@ def unjoinUniversity(request):
         }
         return render(request, 'university.html', context)
     return render(request, 'autherror.html')
-    
+
+def getCourseManage(request):
+    if request.user.is_authenticated():
+        in_university_name = request.GET.get('name', 'None')
+        in_university = models.University.objects.get(name__exact=in_university_name)
+        in_course_tag = request.GET.get('course', 'None')
+        print "course Tag:"
+        print in_course_tag
+        in_course = in_university.course_set.get(tag__exact=in_course_tag)
+        members_list = in_course.members.all()
+        context = {
+            'university'    : in_university,
+            'course'        : in_course,
+            'members_list'  : members_list,
+        }
+        return render(request, 'coursemanage.html', context)
+    return render(request, 'autherror.html')
+
 def getCourse(request):
-	if request.user.is_authenticated():
-		in_university_name = request.GET.get('name', 'None')
-		in_university = models.University.objects.get(name__exact=in_university_name)
-		in_course_tag = request.GET.get('course', 'None')
-		in_course = in_university.course_set.get(tag__exact=in_course_tag)
-		is_member = in_course.members.filter(email__exact=request.user.email)
-		context = {
-			'university' : in_university,
-			'course' : in_course,
-			'userInCourse' : is_member,
-		}
-		return render(request, 'course.html', context)
-	return render(request, 'autherror.html')
+    if request.user.is_authenticated():
+	in_university_name = request.GET.get('name', 'None')
+	in_university = models.University.objects.get(name__exact=in_university_name)
+	in_course_tag = request.GET.get('course', 'None')
+	in_course = in_university.course_set.get(tag__exact=in_course_tag)
+	is_member = in_course.members.filter(email__exact=request.user.email)
+	context = {
+	    'university' : in_university,
+	    'course' : in_course,
+	    'userInCourse' : is_member,
+	}
+	return render(request, 'course.html', context)
+    return render(request, 'autherror.html')
 
 def courseForm(request):
 	if request.user.is_authenticated():

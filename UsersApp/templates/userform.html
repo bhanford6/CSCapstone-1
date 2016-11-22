@@ -1,0 +1,107 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<!-- Content -->
+	{% if is_student == True %}
+	<div class="container" role="main">
+		<div class="panel panel-default">
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			{% csrf_token %}
+			<h2 style="color:blue;">Edit Your Page</h2>
+			<br>
+			<label for="university">University</label>
+			<input style="width:300px;" type="text" name="university" id="university" placeholder="University" class="form-control">
+			<br>
+
+			<label for="email">Email</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid #cccccc;border-radius:3px;" type="text"  name="email" id="email" placeholder="user@domain.com" >
+			<label style="margin-left:15px;" for="phone">Phone Number</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid#cccccc;border-radius:3px;" type="tel" name="phone" id="phone" placeholder="(123) 456-7890" >
+			<br>
+			<br>
+
+			<label for="about">About Me</label>
+			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
+			<br>
+
+			<label for="skills">Skills and Attributes</label>
+			<textarea style="width:75%"rows="4" name="skills" id="skills" placeholder="Java, Windows, SQL, ..." class="form-control"></textarea>
+			<br>
+
+			<input type="submit" value="Save" class="btn btn-primary">
+			<br>
+			</form>
+		</div>
+	</div>
+
+	{% elif is_professor == True %}
+	<div class="container" role="main">
+		<div class="panel panel-default">
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			{% csrf_token %}
+			<h2 style="color:blue;">Edit Your Page</h2>
+			<br>
+			<label for="university">University</label>
+			<input style="width:300px;" type="text"  name="university" id="university" placeholder="University" class="form-control">
+			<br>
+
+			<label for="email">Email</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid #cccccc;border-radius:3px;" type="text"  name="email" id="email" placeholder="user@domain.com" >
+			<label style="margin-left:15px;" for="phone">Phone Number</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid#cccccc;border-radius:3px;" type="tel" name="phone" id="phone" placeholder="(123) 456-7890" >
+			<br>
+			<br>
+
+			<label for="about">About Me</label>
+			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
+			<br>
+
+			<label for="projects">Past Projects</label>
+			<textarea style="width:75%"rows="6" name="projects" id="projects" placeholder="Project - short description" class="form-control"></textarea>
+			<br>
+
+			<input type="submit" value="Save" class="btn btn-primary">
+			<br>
+			</form>
+		</div>
+	</div>
+
+	{% elif is_engineer == True %}
+	<div class="container" role="main">
+		<div class="panel panel-default">
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			{% csrf_token %}
+			<h2 style="color:blue;">Edit Your Page</h2>
+			<br>
+			<label for="university">Alma Mater</label>
+			<input style="width:300px;" type="text"  name="university" id="university" placeholder="University" class="form-control">
+			<br>
+
+			<label for="email">Email</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid #cccccc;border-radius:3px;" type="text"  name="email" id="email" placeholder="user@domain.com" >
+			<label style="margin-left:15px;" for="phone">Phone Number</label>
+			<input style="text-indent:10px;height:32px;width:300px;border:1px solid#cccccc;border-radius:3px;" type="tel" name="phone" id="phone" placeholder="(123) 456-7890" >
+			<br>
+			<br>
+
+			<label for="about">About Me</label>
+			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
+			<br>
+
+			<label for="about">About Company</label>
+			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Your Company" class="form-control"></textarea>
+			<br>
+
+			<label for="projects">Past Projects</label>
+			<textarea style="width:75%"rows="6" name="projects" id="projects" placeholder="Project - short description" class="form-control"></textarea>
+			<br>
+
+			<input type="submit" value="Save" class="btn btn-primary">
+			<br>
+			</form>
+		</div>
+	</div>
+
+	{% endif %}
+{% endblock %}

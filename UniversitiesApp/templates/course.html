@@ -13,7 +13,11 @@
             {% else %}
             <a href="/university/course/join?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Join this Course</a>
             {% endif %}
+			{% if userInCourse and user.is_professor %}
 			<a href="/university/course/remove?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Delete this Course</a>
+			{% else %}
+			<p style="font-size:16px;">***Only professors of a course can remove course***</p>
+			{% endif %}
 		</div>
     </div>
     <div class="container" role="main">
@@ -21,18 +25,44 @@
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
-						<th>Students</th>
+						<th style="width:15%;cursor:pointer">Professors</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for item in course.members.all %}
 					<tr>
-						<td>{{ item.get_full_name }}</td>
+						{% if item.is_professor %}
+						<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</td>
+						{% endif %}
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="width:15%;cursor:pointer">Students</th>
+						{% if user.is_professor and userInCourse %}
+						<th style="width:25%'">Remove</th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in course.members.all %}
+					<tr>
+						{% if item.is_student %}
+						<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</td>
+						{% endif %}
+						{% if user.is_professor and userInCourse %}
+						<td><a href="/university/course/manage?name={{ university.name }}&course={{ course.tag }}">remove</a></th>
+						{% endif %}
+					</td>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
+		<br>
+		<br>
 	</div>
 	
 {% endblock %}

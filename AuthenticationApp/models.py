@@ -10,11 +10,12 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class MyUserManager(BaseUserManager):
-    def create_user(self, email=None, password=None, first_name=None, last_name=None,
+    def create_user(self, email=None, uname=None, password=None, first_name=None, last_name=None,
     		is_student=None, is_professor=None, is_engineer=None):
         if not email:
             raise ValueError('Users must have an email address')
-
+        if not uname:
+            raise ValueError('Users must have a uname')
         #We can safetly create the user
         #Only the email field is required
         user = self.model(email=email)
@@ -23,7 +24,6 @@ class MyUserManager(BaseUserManager):
         #If first_name is not present, set it as email's username by default
         if first_name is None or first_name == "" or first_name == '':                                
             user.first_name = email[:email.find("@")]            
-
         #Classify the Users as Students, Professors, Engineers
         if is_student == True and is_professor == True and is_engineer == True:
         	#hack to set Admin using forms
@@ -40,23 +40,23 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email=None, password=None, first_name=None, last_name=None):
-        user = self.create_user(email, password=password, first_name=first_name, last_name=last_name,
+    def create_superuser(self, email=None, uname=None, password=None, first_name=None, last_name=None):
+        user = self.create_user(email, uname, password=password, first_name=first_name, last_name=last_name,
         	is_student=None, is_professor=None, is_engineer=None)
         user.is_admin = True
         user.save(using=self._db)
         return user
 
-    def create_student(self, email=None, password=None,first_name=None, last_name=None):
-        return self.create_user(email, password=password,first_name=first_name, last_name=last_name,
+    def create_student(self, email=None, uname=None, password=None,first_name=None, last_name=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
     	is_student=True, is_professor=False, is_engineer=False)
 
-    def create_professor(self, email=None, password=None,first_name=None, last_name=None):
-        return self.create_user(email, password=password,first_name=first_name, last_name=last_name,
+    def create_professor(self, email=None, uname=None, password=None,first_name=None, last_name=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
     	is_student=False, is_professor=True, is_engineer=False)
 
-    def create_engineer(self, email=None, password=None,first_name=None, last_name=None):
-        return self.create_user(email, password=password,first_name=first_name, last_name=last_name,
+    def create_engineer(self, email=None, uname=None, password=None,first_name=None, last_name=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
     	is_student=False, is_professor=False, is_engineer=True)
 
 
@@ -66,7 +66,13 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-
+    
+    uname = models.CharField(
+        max_length=255,
+        unique=True,
+        null=True,
+        blank=True,
+    )
     first_name = models.CharField(
     	max_length=120,
     	null=True,
@@ -97,6 +103,9 @@ class MyUser(AbstractBaseUser):
 
     def get_short_name(self):        
         return self.first_name
+
+    def get_uname(self):
+        return self.uname
 
     def __str__(self):              #Python 3
         return self.email

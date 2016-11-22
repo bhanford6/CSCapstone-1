@@ -1,0 +1,33 @@
+{% extends "body.html" %}
+
+{% block content %}
+	
+	<div class="container theme-showcase" role="main">
+	<div class="jumbotron">
+		<img src="/{{ university.photo }}" alt="University Image" width=150/>
+		<h2>{{ course.tag }} Course Manager</h2>
+		<h3>{{ course.name }}</h3>
+		<p>{{ course.description }}</p>
+	</div>
+		<table class="table table-striped sortable">
+			<thead>
+				<tr>
+					<th style="width:15%;cursor:pointer">Students</th>
+					<th style="width:25%;">Remove</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in course.members.all %}
+				<tr>
+					{% if item.is_student %}
+					<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</td>
+					<td><a href="/university/course/manage">remove</a></td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+{% endblock %}

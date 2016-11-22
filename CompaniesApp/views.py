@@ -21,6 +21,7 @@ def getCompanies(request):
 def getCompany(request):
     if request.user.is_authenticated():
         in_name = request.GET.get('name', 'None')
+        print in_name
         in_company = models.Company.objects.get(name__exact=in_name)
         is_member = in_company.members.filter(email__exact=request.user.email)
         context = {

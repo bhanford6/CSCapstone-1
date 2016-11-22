@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^', include('CommentsApp.urls')),
     url(r'^', include('StudentApp.urls')),
     url(r'^', include('ProfessorApp.urls')),
+    url(r'^', include('UsersApp.urls')),
 ]

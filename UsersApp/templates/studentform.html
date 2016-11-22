@@ -1,0 +1,30 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="panel panel-default">
+			<form method="post" action="/student?name={{ student.first_name }}" class="panel-body validate">
+			{% csrf_token %}
+			<h2 style="color:blue;">Edit Your Page</h2>
+			<br>
+			<label for="university">University</label>
+			<input style="width:300px;" type="text" name="university" id="university" placeholder="University" class="form-control">
+			<br>
+
+			<label for="about">About Me</label>
+			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
+			<br>
+
+			<label for="skills">Skills and Attributes</label>
+			<textarea style="width:75%"rows="4" name="skills" id="skills" placeholder="Java, Windows, SQL, ..." class="form-control"></textarea>
+			<br>
+
+			<input type="submit" value="Save" class="btn btn-primary">
+			<br>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

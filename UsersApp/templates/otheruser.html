@@ -1,0 +1,49 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<!-- Content -->
+	{% if is_student == True %}
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<h1>{{ first_name }} {{ last_name }}</h1>
+			<p>University<p>
+		</div>
+		<h3>About {{ first_name }}</h3>
+		<br>
+		<h3>Skills and Attributes</h3>
+		<br>
+		<br>
+	</div>
+
+	{% elif is_professor == True %}
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<h1>{{ first_name }} {{ last_name }}</h1>
+			<p>University<p>
+		</div>
+		<h3>About Professor {{ last_name }}</h3>
+		<br>
+		<h3>Past Projects</h3>
+		<br>
+		<br>
+	</div>
+
+	{% elif is_engineer == True %}
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<h1>{{ first_name }} {{ last_name }}</h1>
+			<p>alma Mater<p>
+		</div>
+		<h3>About {{ first_name }} {{ last_name }}</h3>
+		<br>
+		<h3>About Company</h3>
+		<br>
+		<h3>Past Projects</h3>
+		<br>
+		<br>
+	</div>
+	{% endif %}
+{% endblock %}
+
+

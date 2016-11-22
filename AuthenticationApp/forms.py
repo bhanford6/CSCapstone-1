@@ -15,9 +15,10 @@ class RegisterForm(forms.Form):
     """A form to creating new users. Includes all the required
     fields, plus a repeated password."""
     email = forms.CharField(label='Email', widget=forms.EmailInput, required=True)
+    uname = forms.CharField(label='UniqueName', required=True)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput, required=True)    
-
+    
     firstname = forms.CharField(label="First name", widget=forms.TextInput, required=False)
     lastname = forms.CharField(label="Last name", widget=forms.TextInput, required=False)
     university = forms.CharField(label="University", widget=forms.TextInput, required=False)
@@ -45,16 +46,25 @@ class RegisterForm(forms.Form):
         except:
             raise forms.ValidationError("There was an error, please contact us later")
 
+    def clean_uname(self):
+        uname = self.cleaned_data.get("uname")
+        try:
+            exists = MyUser.objects.get(uname=uname)
+            raise forms.ValidationError("This name is not unique from others")
+        except MyUser.DoesNotExist:
+            return uname
+        except:
+            raise forms.ValidationError("There was an error, please contact us later")
 class UpdateForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     password hash display field.
     """
     password = ReadOnlyPasswordHashField()
-
+    print "model: "
     class Meta:
-        model = MyUser        
-        fields = ('email', 'password', 'first_name', 'last_name',
+        model = MyUser       
+        fields = ('email', 'uname', 'password', 'first_name', 'last_name',
             'is_student', 'is_professor', 'is_engineer')
 
     def clean_password(self):            
@@ -74,6 +84,18 @@ class UpdateForm(forms.ModelForm):
         except:
             raise forms.ValidationError("There was an error, please contact us later")
 
+
+    def clean_uname(self):
+        uname = self.cleaned_data.get("uname")
+        if uname == self.initial["uname"]:
+            return uname
+        try:
+            exists = MyUser.objects.get(uname=uname)
+            raise forms.ValidationError("This name is not unique from others")
+        except MyUser.DoesNotExist:
+            return uname
+        except:
+            raise forms.ValidationError("There was an error, please contact us later")
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
         #Check is email has changed

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'CommentsApp',
     'StudentApp',
     'ProfessorApp',
+    'UsersApp',
 ]
 
 MIDDLEWARE = [
