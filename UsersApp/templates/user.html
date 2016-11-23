@@ -8,13 +8,15 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ user.get_full_name }}</h1>
-			<p>{{ user.university }}University<p>
+			<p>{{ user_page.university }}<p>
 		</div>
 		<h3>About {{ user.first_name }}</h3>
 		<br>
-		<p>{{ student_attr.about }}
+		<p>{{ user_page.about }}
 		<br>
 		<h3>Skills and Attributes</h3>
+		<br>
+		<p>{{ user_page.skills }}
 		<br>
 		<br>
 	</div>

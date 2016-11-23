@@ -13,7 +13,7 @@
 			<thead>
 				<tr>
 					<th style="width:15%;cursor:pointer">Students</th>
-					<th style="width:25%;">Remove</th>
+					<th style="width:25%;">Remove</th> 
 				</tr>
 			</thead>
 			<tbody>
@@ -21,7 +21,7 @@
 				<tr>
 					{% if item.is_student %}
 					<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</td>
-					<td><a href="/university/course/manage">remove</a></td>
+					<td><a href="/university/course/remove?name={{ university.name }}&course={{ course.tag }}&student={{ item.uname }}">remove</a></td> 
 					{% endif %}
 				</tr>
 				{% endfor %}

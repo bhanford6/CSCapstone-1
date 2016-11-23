@@ -18,7 +18,7 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Users must have a uname')
         #We can safetly create the user
         #Only the email field is required
-        user = self.model(email=email)
+        user = self.model(email=email, uname=uname, first_name=first_name, last_name=last_name)
         user.set_password(password)
 
         #If first_name is not present, set it as email's username by default

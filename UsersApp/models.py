@@ -3,7 +3,13 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+class studentManager():
+    def update_page(self, university=None, email=None, phone=None, about=None, skills=None):
+        page = self.model(university=university, email=email, phone=phone, about=about, skills=skills)
+        page.save(self._db)
+
 class Student(models.Model):
+    ident = models.AutoField(primary_key=True, default=0)
     university = models.CharField(
         default=" ", 
         max_length=50, 
@@ -29,8 +35,7 @@ class Student(models.Model):
         max_length=10000,
         null=True
     )
-    def __str__(self):
-        return self.name
+    objects = studentManager()
 
 class Professor(models.Model):
     university = models.CharField(
@@ -58,6 +63,7 @@ class Professor(models.Model):
         max_length=10000,
         null=True
     )
+    #objects = professorManager()
 
 class Engineer(models.Model):
     university = models.CharField(
@@ -90,3 +96,4 @@ class Engineer(models.Model):
         max_length=10000,
         null=True
     )
+    #objects = professorManager()

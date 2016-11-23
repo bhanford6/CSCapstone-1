@@ -6,7 +6,7 @@
 	{% if is_student == True %}
 	<div class="container" role="main">
 		<div class="panel panel-default">
-			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			<form method="post" action="/user/form" class="panel-body validate"><!--?name={{ uname }}" class="panel-body validate">-->
 			{% csrf_token %}
 			<h2 style="color:blue;">Edit Your Page</h2>
 			<br>
@@ -28,7 +28,6 @@
 			<label for="skills">Skills and Attributes</label>
 			<textarea style="width:75%"rows="4" name="skills" id="skills" placeholder="Java, Windows, SQL, ..." class="form-control"></textarea>
 			<br>
-
 			<input type="submit" value="Save" class="btn btn-primary">
 			<br>
 			</form>

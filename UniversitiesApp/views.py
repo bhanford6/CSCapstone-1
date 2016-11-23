@@ -185,6 +185,24 @@ def removeCourse(request):
 	# render error page if user is not logged in
 	return render(request, 'autherror.html')
 
+def removeStudent(request):
+    if request.user.is_authenticated():
+        in_university_name = request.GET.get('name', 'None')
+        in_unviersity = models.University.objects.get(name__exact=in_university_name)
+        in_course_tag = request.GET.get('course', 'None')
+        in_course = in_university.course_set.get(tag___exact=in_course_tag)
+        members_list = in_course.members.all()
+        in_removee = request.GET.get('student', 'None')
+        removee = in_course.members.filter(uname__exact=in_removee)
+        removee.delete()
+        context = {
+            'university'    : in_university,
+            'userIsMember'  : is_member,
+            'removee'       : removee,
+        }
+        return render(request, 'studentremove.html', context)
+    return render(request, 'autherror.html')
+
 def joinCourse(request):
 	if request.user.is_authenticated():
 		in_university_name = request.GET.get('name', 'None')
