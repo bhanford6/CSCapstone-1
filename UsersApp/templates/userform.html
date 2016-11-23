@@ -28,8 +28,11 @@
 			<label for="skills">Skills and Attributes</label>
 			<textarea style="width:75%"rows="4" name="skills" id="skills" placeholder="Java, Windows, SQL, ..." class="form-control"></textarea>
 			<br>
-			<input type="submit" value="Save" class="btn btn-primary">
+			<input type="submit" value="Save Changes" class="btn btn-primary">
 			<br>
+			</form>
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">{% csrf_token %}
+				<input type="submit" value="View Page" class="btn btn-primary">
 			</form>
 		</div>
 	</div>
@@ -37,7 +40,7 @@
 	{% elif is_professor == True %}
 	<div class="container" role="main">
 		<div class="panel panel-default">
-			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			<form method="post" action="/user/form" class="panel-body validate">
 			{% csrf_token %}
 			<h2 style="color:blue;">Edit Your Page</h2>
 			<br>
@@ -56,12 +59,15 @@
 			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
 			<br>
 
-			<label for="projects">Past Projects</label>
-			<textarea style="width:75%"rows="6" name="projects" id="projects" placeholder="Project - short description" class="form-control"></textarea>
+			<label for="classes">Classes</label>
+			<textarea style="width:75%"rows="6" name="classes" id="classes" placeholder="Classes" class="form-control"></textarea>
 			<br>
 
-			<input type="submit" value="Save" class="btn btn-primary">
+			<input type="submit" value="Save Changes" class="btn btn-primary">
 			<br>
+			</form>
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate"> {% csrf_token %}
+				<input type="submit" value="View Page" class="btn btn-primary">
 			</form>
 		</div>
 	</div>
@@ -69,7 +75,7 @@
 	{% elif is_engineer == True %}
 	<div class="container" role="main">
 		<div class="panel panel-default">
-			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">
+			<form method="post" action="/user/form" class="panel-body validate">
 			{% csrf_token %}
 			<h2 style="color:blue;">Edit Your Page</h2>
 			<br>
@@ -88,16 +94,19 @@
 			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
 			<br>
 
-			<label for="about">About Company</label>
-			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Your Company" class="form-control"></textarea>
+			<label for="aboutcomp">About Company</label>
+			<textarea style="width:75%"rows="5" name="aboutcomp" id="aboutcomp" placeholder="Tell Us About Your Company" class="form-control"></textarea>
 			<br>
 
 			<label for="projects">Past Projects</label>
 			<textarea style="width:75%"rows="6" name="projects" id="projects" placeholder="Project - short description" class="form-control"></textarea>
 			<br>
 
-			<input type="submit" value="Save" class="btn btn-primary">
+			<input type="submit" value="Save Changes" class="btn btn-primary">
 			<br>
+			</form>
+			<form method="post" action="/user?name={{ uname }}" class="panel-body validate"> {% csrf_token %}
+				<input type="submit" value="View Page" class="btn btn-primary">
 			</form>
 		</div>
 	</div>

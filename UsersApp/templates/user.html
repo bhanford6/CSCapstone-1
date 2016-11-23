@@ -16,7 +16,7 @@
 		<br>
 		<h3>Skills and Attributes</h3>
 		<br>
-		<p>{{ user_page.skills }}
+		<ul>{{ user_page.skills }}</ul>
 		<br>
 		<br>
 	</div>
@@ -25,11 +25,14 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ user.get_full_name }}</h1>
-			<p>University<p>
+			<p>{{ user_page.university }}<p>
 		</div>
 		<h3>About Professor {{ user.last_name }}</h3>
 		<br>
-		<h3>Past Projects</h3>
+		<p style="width:60%;margin-left:15px">{{ user_page.about }}</p>
+		<br>
+		<h3>Classes</h3>
+		<ul>{{ user_page.classes }}</ul>
 		<br>
 		<br>
 	</div>
@@ -38,13 +41,19 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ user.get_full_name }}</h1>
-			<p>Alma Mater<p>
+			<p>Alma Mater: {{ user_page.university }}<p>
 		</div>
 		<h3>About {{ user.get_full_name }}</h3>
 		<br>
+		<p style="width:60%;margin-left:15px;">{{ user_page.about }}</p>
+		<br>
 		<h3>About Company</h3>
 		<br>
+		<p style="width:60%;margin-left:15px;">{{ user_page.aboutcomp }}</p>
+		<br>
 		<h3>Past Projects</h3>
+		<br>
+		<p style="width:60%;margin-left:15px;">{{ user_page.projects }}</p>
 		<br>
 		<br>
 	</div>

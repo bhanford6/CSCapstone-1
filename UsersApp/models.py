@@ -3,6 +3,15 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+class engineerManager():
+    def update_page(self, university=None, email=None, phone=None, about=None, aboutcomp=None, projects=None):
+        page = self.model(university=university, email=email, phone=phone, about=about, aboutcomp=aboutcomp, projects=projects)
+        page.save(self._db)
+class professorManager():
+    def update_page(self, university=None, email=None, phone=None, about=None, classes=None):
+        page = self.model(university=university, email=email, phone=phone, about=about, classes=classes)
+        page.save(self._db)
+    
 class studentManager():
     def update_page(self, university=None, email=None, phone=None, about=None, skills=None):
         page = self.model(university=university, email=email, phone=phone, about=about, skills=skills)
@@ -38,6 +47,7 @@ class Student(models.Model):
     objects = studentManager()
 
 class Professor(models.Model):
+    ident = models.AutoField(primary_key=True, default=0)
     university = models.CharField(
         default=" ", 
         max_length=50, 
@@ -58,14 +68,15 @@ class Professor(models.Model):
         max_length=100000,
         null=True
     )
-    projects = models.CharField(
+    classes = models.CharField(
         default=" ",
         max_length=10000,
         null=True
     )
-    #objects = professorManager()
+    objects = professorManager()
 
 class Engineer(models.Model):
+    ident = models.AutoField(primary_key=True, default=0)
     university = models.CharField(
         default=" ", 
         max_length=50, 
@@ -96,4 +107,4 @@ class Engineer(models.Model):
         max_length=10000,
         null=True
     )
-    #objects = professorManager()
+    objects = professorManager()
