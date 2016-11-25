@@ -5,6 +5,8 @@ from django.shortcuts import render
 
 from . import models
 from . import forms
+from AuthenticationApp.models import MyUser
+from ProjectsApp.models import Project
 
 def getGroups(request):
     if request.user.is_authenticated():
@@ -83,4 +85,62 @@ def unjoinGroup(request):
         }
         return render(request, 'group.html', context)
     return render(request, 'autherror.html')
-    
+
+def projectsGroup(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        projects = Project.objects.all()
+        members = in_group.members.all()
+        context = {
+            'group'     : in_group,
+            'projects'  : projects,
+            'members'   : members,
+        }
+        return render(request, 'projectsgroup.html', context)
+        
+    return render(request, 'autherror.html')
+
+def membersGroup(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        members = in_group.members.all()
+        try:
+            is_member = members.get(id__exact=request.user.id)
+        except:
+            is_member = False
+        context = {
+            'group'     : in_group,
+            'members'   : members,
+            'is_member' : is_member,
+        }
+        return render(request, 'membersgroup.html', context)
+    return render(request, 'autherror.html')
+
+def addMembers(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        users = MyUser.objects.all()
+        context = {
+            'group'     : in_group,
+            'users'     : users
+        }
+        return render(request, 'addmembers.html', context)
+    return render(request, 'autherror.html')
+
+def addMember(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        memberid = request.GET.get('id', 'None')
+        member = MyUser.objects.get(id__exact=memberid)
+        in_group.members.add(member)
+        in_group.save()
+        context = {
+            'group'     : in_group,
+            'member'    : member,
+        }
+        return render(request, 'addmember.html', context)
+    return render(request, 'autherror.html')

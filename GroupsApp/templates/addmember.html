@@ -1,0 +1,15 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<div class="container theme-showcase" role="main">
+	<div class="jumbotron">
+		<p>{{ member.get_full_name }} has been added to the {{ group.name }} group</p>
+	</div>
+	<br>
+	<a class="btn btn-primary" href="/group/members/add?name={{ group.name }}&">Add Another Member</a>
+	<a style="margin-left:15px;"class="btn btn-primary" href="/group?name={{ group.name }}">Return To Group</a>
+	</div>
+
+
+{% endblock %}

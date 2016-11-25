@@ -1,0 +1,44 @@
+{% extends "body.html" %}
+{% block content %}
+
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue">Members</h2>
+			{% if is_member %}
+			<a class="btn btn-primary"href="/group/members/add?name={{ group.name }}">Add Member</a>
+			{% endif %}
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="width:10%;cursor:pointer">Name</th>
+						<th style="width:10%;cursor:pointer">Status</th>
+						<th style="width:50%;cursor:pointer">University</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in members %}
+					<tr id="row" style="cursor:pointer">
+						<td><a href="/user/other?name={{ user.get_uname }}">{{ user.get_full_name }}</a></td>
+						{% if user.is_student == True %}
+						<td>Student</td>
+						{% elif user.is_professor == True %}
+						<td>Professor</td>
+						{% elif user.is_engineer == True %}
+						<td>Engineer</td>
+						{% else %}
+						<td> </td>
+						{% endif %}
+
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<style>
+		#row:hover {
+			background-color:#a7b3c6;
+		}
+	</style>
+{% endblock %}

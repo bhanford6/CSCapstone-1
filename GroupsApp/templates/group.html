@@ -12,6 +12,10 @@
 			{% else %}
 			<a href="/group/join?name={{ group.name }}" class="btn btn-default">Join this Group</a>
 			{% endif %}
+			<br>
+			<br>
+			<a href="/group/projects?name={{ group.name }}" class="btn btn-primary">Browse Projects</a>
+			<a style="margin-left:15px;"href="/group/members?name={{ group.name }}" class="btn btn-primary">Members</a>
 		</div>
 	</div>
 	
@@ -20,7 +24,7 @@
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
-						<th>Users</th>
+						<th>Members</th>
 					</tr>
 				</thead>
 				<tbody>
