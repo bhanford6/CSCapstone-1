@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^university/course$', views.getCourse, name="Course"),
     url(r'^university$', views.getUniversity, name='University'),
     url(r'^university/course/manage$', views.getCourseManage, name="CourseManage"),
-    url(r'^university/course/remove$', views.removeStudent, name="RemoveStudent"),
+    url(r'^university/course/removestudent$', views.removeStudent, name="RemoveStudent"),
+    url(r'^university/course/addmemlist$', views.addStudentList, name="AddStudentList"),
+    url(r'^university/course/addmem$', views.addStudent, name="AddStudent"),
 ]

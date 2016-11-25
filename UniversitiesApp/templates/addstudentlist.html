@@ -1,0 +1,36 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+    <!-- Content -->
+    <div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue">Students</h2>
+			<br>
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="width:15%;cursor:pointer">Name</th>
+						<th style="width:25%;cursor:pointer">University</th>
+						<th style="cursor:pointer">Add</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for student in users_list %}
+					<tr id="row" style="cursor:pointer">
+						<td><a href="/user/other?name={{ student.get_uname }}">{{ student.get_full_name }}</a></td>
+						<td>{{ university.name }}</td>
+						<td><a href="/university/course/addmem?name={{ university.name }}&course={{ course.tag }}&student={{ student.uname }}">add</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		</div>
+		<style>
+			#row:hover {
+				background-color:#a7b3c6;
+			}
+		</style>
+
+{% endblock %}

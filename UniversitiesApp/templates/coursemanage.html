@@ -21,13 +21,16 @@
 				<tr>
 					{% if item.is_student %}
 					<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</td>
-					<td><a href="/university/course/remove?name={{ university.name }}&course={{ course.tag }}&student={{ item.uname }}">remove</a></td> 
+					<td><a href="/university/course/removestudent?name={{ university.name }}&course={{ course.tag }}&student={{ item.uname }}">remove</a></td> 
 					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<br>
+		<a class="btn btn-primary" href="/university/course/addmemlist?name={{ university.name }}&course={{ course.tag }}">Add Student</a>
 	</div>
+	<br>
 
 
 {% endblock %}

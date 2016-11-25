@@ -7,11 +7,15 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ first_name }} {{ last_name }}</h1>
-			<p>University<p>
+			<p>{{ user_page.university }}<p>
 		</div>
 		<h3>About {{ first_name }}</h3>
 		<br>
+		<p style="margin-left:15px;">{{ user_page.about }}
+		<br>
 		<h3>Skills and Attributes</h3>
+		<br>
+		<p style="margin-left:15px;">{{ user_page.skills }}</p>
 		<br>
 		<br>
 	</div>
@@ -20,11 +24,15 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ first_name }} {{ last_name }}</h1>
-			<p>University<p>
+			<p>{{ user_page.university }}<p>
 		</div>
 		<h3>About Professor {{ last_name }}</h3>
 		<br>
-		<h3>Past Projects</h3>
+		<p style="margin-left:15px;">{{ user_page.about }}</p>
+		<br>
+		<h3>Classes</h3>
+		<br>
+		<p style="margin-left:15px;">{{ user_page.classes }}</p>
 		<br>
 		<br>
 	</div>
@@ -33,13 +41,19 @@
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ first_name }} {{ last_name }}</h1>
-			<p>alma Mater<p>
+			<p>{{ user_page.university }}<p>
 		</div>
 		<h3>About {{ first_name }} {{ last_name }}</h3>
 		<br>
+		<p style="margin-left:15px;">{{ user_page.about }}</p>
+		<br>
 		<h3>About Company</h3>
 		<br>
+		<p style="margin-left:15px;">{{ user_page.aboutcomp }}</p>
+		<br>
 		<h3>Past Projects</h3>
+		<br>
+		<p style="margin-left:15px;">{{ user_page.projects }}</p>
 		<br>
 		<br>
 	</div>

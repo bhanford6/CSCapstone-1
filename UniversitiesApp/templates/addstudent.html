@@ -4,15 +4,12 @@
 
 	<div class="container theme-showcase" role="main">
 	<div class="jumbotron">
-		{% if  removee  == None %}
-		<p>{{ removeeobj.get_full_name }} is not in the {{ course.tag }} course</p>
-		{% else %}
-		<p>{{ removeeobj.get_full_name }} has been removed from the {{ course.tag }} course</p>
-		{% endif %}
+		<p>{{ student.get_full_name }} has been added to the {{ course.tag }} course</p>
 	</div>
 	<br>
 	<a class="btn btn-primary" href="/university/course/manage?name={{ university.name }}&course={{ course.tag }}">Course Manager</a>
 	<a style="margin-left:15px;"class="btn btn-primary" href="/university/course?name={{ university.name }}&course={{ course.tag }}">Course Page</a>
 	</div>
+
 
 {% endblock %}

@@ -226,17 +226,19 @@ def getUser(request):
 # Display other users's profile page
 def getOtherUser(request):
     in_name = request.GET.get('name', 'None')
-    print request.user.uname
-    print "nothing"
-    print in_name
     other_user =  MyUser.objects.get(uname__exact=in_name)
-    print other_user
     r = re.compile("(@?[^@]+)")
     tup = r.findall(other_user.email)
     unique_name = tup[0]
-    print unique_name
-    print other_user.is_engineer
+    user = MyUser.objects.get(uname__exact=unique_name)
+    if user.is_student:
+        user_page = models.Student.objects.get(ident__exact=user.id)
+    elif user.is_professor:
+        user_page = models.Professor.objects.get(ident__exact=user.id)
+    elif user.is_engineer:
+        user_page = models.Engineer.objects.get(ident__exact=user.id)
     context = {
+        'user_page'     : user_page,
         'uname'         : unique_name,
         'first_name'    : other_user.first_name,
         'last_name'     : other_user.last_name,

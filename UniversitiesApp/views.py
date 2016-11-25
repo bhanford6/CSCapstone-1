@@ -6,6 +6,7 @@ from django.shortcuts import render
 
 from . import models
 from . import forms
+from AuthenticationApp.models import MyUser
 
 def getUniversities(request):
     if request.user.is_authenticated():
@@ -185,22 +186,66 @@ def removeCourse(request):
 	# render error page if user is not logged in
 	return render(request, 'autherror.html')
 
+def addStudentList(request):
+    if request.user.is_authenticated():
+        in_university_name = request.GET.get('name', 'None')
+        in_university = models.University.objects.get(name__exact=in_university_name)
+        in_course_tag = request.GET.get('course', 'None')
+        in_course = in_university.course_set.get(tag__exact=in_course_tag)
+        members_list = in_course.members.all()
+        users_list = MyUser.objects.filter(is_student__exact=True)
+        context = {
+            'university'    : in_university,
+            'course'        : in_course,
+            'users_list'  : users_list,
+        }
+        return render(request, 'addstudentlist.html', context)
+    return render(request, 'autherror.html')   
+
+def addStudent(request):
+    if request.user.is_authenticated():
+        in_university_name = request.GET.get('name', 'None')
+        in_university = models.University.objects.get(name__exact=in_university_name)
+        in_course_tag = request.GET.get('course', 'None')
+        in_course = in_university.course_set.get(tag__exact=in_course_tag)
+        members_list = in_course.members.all()
+        users_list = MyUser.objects.filter(is_student__exact=True)
+        in_student_uname = request.GET.get('student', 'None')
+        in_student = MyUser.objects.get(uname__exact=in_student_uname)
+        in_course.members.add(in_student)
+        in_course.save()
+        context = {
+            'university'    : in_university,
+            'course'        : in_course,
+            'users_list'    : users_list,
+            'student'       : in_student,
+        }
+        return render(request, 'addstudent.html', context)
+    return render(request, 'autherror.html')   
+        
+
 def removeStudent(request):
     if request.user.is_authenticated():
         in_university_name = request.GET.get('name', 'None')
-        in_unviersity = models.University.objects.get(name__exact=in_university_name)
+        in_university = models.University.objects.get(name__exact=in_university_name)
         in_course_tag = request.GET.get('course', 'None')
-        in_course = in_university.course_set.get(tag___exact=in_course_tag)
+        in_course = in_university.course_set.get(tag__exact=in_course_tag)
         members_list = in_course.members.all()
         in_removee = request.GET.get('student', 'None')
-        removee = in_course.members.filter(uname__exact=in_removee)
-        removee.delete()
+        removeeobj = MyUser.objects.get(uname__exact=in_removee)
+        try:
+            removee = in_course.members.get(uname__exact=in_removee)
+            in_course.members.remove(removee)
+            in_course.save()
+        except:
+            removee = None
         context = {
+            'course'        : in_course,
             'university'    : in_university,
-            'userIsMember'  : is_member,
             'removee'       : removee,
+            'removeeobj'    : removeeobj,
         }
-        return render(request, 'studentremove.html', context)
+        return render(request, 'removestudent.html', context)
     return render(request, 'autherror.html')
 
 def joinCourse(request):
