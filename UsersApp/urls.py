@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^engineer/all$', views.getEngineers, name='Engineers'),
     url(r'^engineer/form$', views.getUserForm, name='EngineerForm'),
     url(r'^engineer$', views.getUser, name='Engineer'),
+
+    url(r'^user/bookmarks$', views.getBookmarks, name='Bookmarks'),
 ]
 

@@ -5,6 +5,7 @@ Created by Harris Christiansen on 10/02/16.
 from django.shortcuts import render
 from . import models
 from . import forms
+from AuthenticationApp.models import MyUser
 def getProjects(request):
 	projects_list = models.Project.objects.all()
 	return render(request, 'projects.html', {
@@ -15,8 +16,41 @@ def getProject(request):
     if request.user.is_authenticated():
         in_name = request.GET.get('name', 'None')
         in_project = models.Project.objects.get(name__exact=in_name)
+        try:
+            bookmarked = request.user.bookmarks.get(id__exact=in_project.id)
+        except:
+            bookmarked = False
         context = {
-            'project' : in_project,
+            'bookmarked': bookmarked,
+            'project'   : in_project,
+        }
+        return render(request, 'project.html', context)
+    # render error page if user is not logged in
+    return render(request, 'autherror.html')
+
+
+def getBookProject(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_project = models.Project.objects.get(name__exact=in_name)
+        request.user.bookmarks.add(in_project)
+        request.user.save()
+        context = {
+            'bookmarked'    : True,
+            'project'       : in_project,
+        }
+        return render(request, 'project.html', context)
+    # render error page if user is not logged in
+    return render(request, 'autherror.html')
+def getUnbookProject(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_project = models.Project.objects.get(name__exact=in_name)
+        request.user.bookmarks.remove(in_project)
+        request.user.save()
+        context = {
+            'bookmarked'    : False,
+            'project'       : in_project,
         }
         return render(request, 'project.html', context)
     # render error page if user is not logged in

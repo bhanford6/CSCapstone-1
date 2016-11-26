@@ -5,6 +5,11 @@
 	<!-- Content -->
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
+			{% if bookmarked %}
+			<a style="float:right;background-color:red"class="btn btn-primary"href="/project/unbook?name={{ project.name }}">UnBookmark</a>
+			{% else %}
+			<a style="float:right;"class="btn btn-primary"href="/project/book?name={{ project.name }}">Bookmark</a>
+			{% endif %}
 			<h1>{{ project.name }}</h1>
 			<p>{{ project.description }}</p>
 		</div>

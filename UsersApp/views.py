@@ -5,6 +5,7 @@ from . import models
 from . import forms
 from .models import Student
 from AuthenticationApp.models import MyUser
+from ProjectsApp.models import Project
 # Create your views here.
 
 class identity():
@@ -41,6 +42,14 @@ def getUsers(request):
         'users' : users_list
     }
     return render(request, 'users.html', context)
+
+def getBookmarks(request):
+    booked = request.user.bookmarks.all()
+    context = {
+        'projects'  : booked
+    }
+    return render(request, 'bookmarks.html', context)
+    
 
 # Form to edit user's profile page
 def getUserForm(request):
