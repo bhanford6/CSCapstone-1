@@ -3,7 +3,7 @@ import sys
 import re
 from . import models
 from . import forms
-from .models import Student
+#from .models import Student
 from AuthenticationApp.models import MyUser
 from ProjectsApp.models import Project
 # Create your views here.
@@ -13,7 +13,7 @@ class identity():
 
 # Display table of all professors
 def getProfessors(request):
-    professors_list = MyUser.objects.get(is_professor=True)
+    professors_list = MyUser.objects.filter(is_professor=True)
     context = {
         'professors' : professors_list
     }
@@ -21,7 +21,7 @@ def getProfessors(request):
 
 # Display table of all students
 def getStudents(request):
-    students_list = MyUser.objects.get(is_student=True)
+    students_list = MyUser.objects.filter(is_student=True)
     context = {
         'students' : students_list
     }
@@ -29,9 +29,9 @@ def getStudents(request):
 
 # Display table of all engineers
 def getEngineers(request):
-    engineers_list = MyUser.objects.get(is_engineer=True)
+    engineers_list = MyUser.objects.filter(is_engineer=True)
     context= {
-        'engineers' : engineers_list
+        'engineers' : engineers_list,
     }
     return render(request, 'engineers.html', context)
 
@@ -64,6 +64,7 @@ def getUserForm(request):
             cur_prof = models.Professor.objects.get(ident__exact=request.user.id)
         elif request.user.is_engineer:
             cur_eng = models.Engineer.objects.get(ident__exact=request.user.id)
+            print "worked?"
     except:
         cur_stud = None
         cur_prof = None
@@ -145,6 +146,7 @@ def getUserForm(request):
                 email=form.cleaned_data['email'],
                 phone=form.cleaned_data['phone'],
                 about=form.cleaned_data['about'],
+                company=form.cleaned_data['company'],
                 aboutcomp=form.cleaned_data['aboutcomp'],
                 projects=form.cleaned_data['projects'],
             )
@@ -155,8 +157,9 @@ def getUserForm(request):
             cur_eng.email=form.cleaned_data['email']
             cur_eng.phone=form.cleaned_data['phone']
             cur_eng.about=form.cleaned_data['about']
+            cur_eng.company=form.cleaned_data['company']
             cur_eng.aboutcomp=form.cleaned_data['aboutcomp']
-            cur_eng.projects=form.clenaed_data['projects']
+            cur_eng.projects=form.cleaned_data['projects']
             cur_eng.save()
         engineer_attr = models.Engineer.objects.all()
         context = {
@@ -192,6 +195,7 @@ def getUserForm(request):
                 'email'         : cur_eng.email,
                 'phone'         : cur_eng.phone,
                 'about'         : cur_eng.about,
+                'company'       : cur_eng.company,
                 'aboutcomp'     : cur_eng.aboutcomp,
                 'projects'      : cur_eng.projects,
             })
@@ -215,11 +219,20 @@ def getUser(request):
         user = MyUser.objects.get(uname__exact=uname)
         print user.email
         if user.is_student:
-            user_page = models.Student.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Student.objects.get(ident__exact=user.id)
+            except:
+                return getUserForm(request)
         elif user.is_professor:
-            user_page = models.Professor.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Professor.objects.get(ident__exact=user.id)
+            except: 
+                return getUserForm(request)
         elif user.is_engineer:
-            user_page = models.Engineer.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Engineer.objects.get(ident__exact=user.id)
+            except:
+                return getUserForm(request)
         print user_page
         context = {
             'user_page'     : user_page,
@@ -241,11 +254,20 @@ def getOtherUser(request):
     unique_name = tup[0]
     user = MyUser.objects.get(uname__exact=unique_name)
     if user.is_student:
-        user_page = models.Student.objects.get(ident__exact=user.id)
+        try:
+            user_page = models.Student.objects.get(ident__exact=user.id)
+        except:
+            user_page = None
     elif user.is_professor:
-        user_page = models.Professor.objects.get(ident__exact=user.id)
+        try:
+            user_page = models.Professor.objects.get(ident__exact=user.id)
+        except:
+            user_page = None
     elif user.is_engineer:
-        user_page = models.Engineer.objects.get(ident__exact=user.id)
+        try:
+            user_page = models.Engineer.objects.get(ident__exact=user.id)
+        except:
+            user_page = None
     context = {
         'user_page'     : user_page,
         'uname'         : unique_name,

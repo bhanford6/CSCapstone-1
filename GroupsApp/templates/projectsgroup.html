@@ -5,7 +5,9 @@
 	<!-- Content -->
 	<div class="container" role="main">
 		<div class="table-responsive">
+			{% if user.is_engineer %}
 			<h2 style="color:blue">Projects</h2>
+			{% endif %}
 			<a class="btn btn-primary" href="/project/form">New Project</a>
 			<table class="table table-striped sortable">
 				<thead>

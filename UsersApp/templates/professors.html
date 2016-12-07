@@ -8,8 +8,7 @@
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
-						<th style="width:15%;cursor:pointer">First Name</th>
-						<th style="width:15%;cursor:pointer">Last Name</th>
+						<th style="width:15%;cursor:pointer">Name</th>
 						<th style="width:50%;cursor:pointer">University</th>
 					</tr>
 				</thead>
@@ -17,11 +16,10 @@
 					{% for professor in professors %}
 					<tr id="row" style="cursor:pointer">
 					{% if professor.is_professor %}
-						<td><a href="/professor?name={{ professor.first_name }}">{{ professor.first_name }}</a></td>
-						<td><a href="/professor?name={{ professor.first_name }}">{{ professor.last_name}}</a></td>
-					<tr>
+						<td><a href="/professor?name={{ professor.first_name }}">{{ professor.get_full_name }}</a></td>
+						<td>{{ professor.school }}</td>
 					{% endif %}
-					<tr>
+					</tr>
 					{% endfor %}
 				</tbody>
 			</table>

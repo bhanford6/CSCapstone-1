@@ -6,6 +6,8 @@ from django.shortcuts import render
 from . import models
 from . import forms
 from AuthenticationApp.models import MyUser
+from CompaniesApp.models import Company
+
 def getProjects(request):
 	projects_list = models.Project.objects.all()
 	return render(request, 'projects.html', {
@@ -16,13 +18,36 @@ def getProject(request):
     if request.user.is_authenticated():
         in_name = request.GET.get('name', 'None')
         in_project = models.Project.objects.get(name__exact=in_name)
+        user = request.user
+        hasComp = True
+        userInComp = True
+        mem = None
+        try:
+            companies = Company.objects.filter(project__exact=in_project)
+        except:
+            hasComp = False
+
+        try:
+            for company in companies:
+                try:
+                    mem = company.members.get(email__exact=user.email)
+                except:
+                    continue
+        except:
+            userInComp = False
+        if mem == None:
+            userInComp = False
+
         try:
             bookmarked = request.user.bookmarks.get(id__exact=in_project.id)
         except:
             bookmarked = False
         context = {
-            'bookmarked': bookmarked,
-            'project'   : in_project,
+            'bookmarked'    : bookmarked,
+            'project'       : in_project,
+            'userInComp'    : userInComp,
+            'projHasComp'   : hasComp,
+            'member'        : mem,
         }
         return render(request, 'project.html', context)
     # render error page if user is not logged in
@@ -73,3 +98,16 @@ def addProject(request):
         else:
             form = forms.ProjectForm()
     return render(request, 'projects.html')
+
+def removeProject(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_project = models.Project.objects.get(name__exact=in_name)
+        in_project.delete()
+        context = {
+            'project'   : in_project,
+        }
+        return render(request, 'removeproject.html', context)
+    return render(request, 'autherror.html')
+
+

@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^company/join$', views.joinCompany, name='JoinCompany'),
     url(r'^company/unjoin$', views.unjoinCompany, name='UnjoinCompany'),
     url(r'^company', views.getCompany, name='Company'),
+    url(r'^company/projects$', views.getCompProjects, name='CompProjects'),
+    url(r'^company/project/add$', views.addProject, name='AddProject'),
 ]

@@ -7,6 +7,8 @@ from . import models
 from . import forms
 from AuthenticationApp.models import MyUser
 from ProjectsApp.models import Project
+from UsersApp.models import Engineer
+from CompaniesApp.models import Company
 
 def getGroups(request):
     if request.user.is_authenticated():
@@ -23,9 +25,11 @@ def getGroup(request):
         in_name = request.GET.get('name', 'None')
         in_group = models.Group.objects.get(name__exact=in_name)
         is_member = in_group.members.filter(email__exact=request.user.email)
+        user = request.user
         context = {
             'group' : in_group,
             'userIsMember': is_member,
+            'user'  : user,
         }
         return render(request, 'group.html', context)
     # render error page if user is not logged in
@@ -146,3 +150,52 @@ def addMember(request):
         }
         return render(request, 'addmember.html', context)
     return render(request, 'autherror.html')
+
+def remove(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        in_group.delete()
+        context = {
+            'group' : in_group,
+        }
+        return render(request, 'removegroup.html', contexti)
+    return render(request, 'autherror.html')
+
+def assignGroup(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        user = request.user
+        comp = None
+        proj = None
+
+        # check that the engineer is apart of an existing company
+        try:
+            eng = Engineer.objects.get(ident__exact=user.id)
+            comp = Company.objects.get(name__exact=eng.company)
+        except:
+            comp = None 
+
+        if comp != None:
+            try:
+                proj = comp.projects.get(eng.project)
+            except:
+                proj = None
+
+        context = {
+            'group'     : in_group,
+            'user'      : user,
+            'company'   : comp,
+            'engineer'  : eng,
+            'project'   : proj,
+        }
+        return render(request, 'assigngroup.html', context)
+    return render(reqeust, 'autherror.html')
+
+
+
+
+
+
+

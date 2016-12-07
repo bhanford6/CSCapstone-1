@@ -12,6 +12,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm, UpdateForm
 from .models import MyUser
+from ProjectsApp.models import Project
 
 # Auth Views
 
@@ -58,7 +59,9 @@ def auth_register(request):
                 last_name=form.cleaned_data['lastname'],
     		is_student=form.cleaned_data['student'], 
                 is_professor=form.cleaned_data['professor'], 
-    		is_engineer=form.cleaned_data['engineer']
+    		is_engineer=form.cleaned_data['engineer'],
+                school=form.cleaned_data['university'],
+                bookmarks=Project.objects.get(name__exact="Base Project"),
                 )
 		new_user.save()	
 		login(request, new_user);	

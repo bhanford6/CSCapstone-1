@@ -4,8 +4,8 @@ from django.db import models
 
 # Create your models here.
 class engineerManager():
-    def update_page(self, university=None, email=None, phone=None, about=None, aboutcomp=None, projects=None):
-        page = self.model(university=university, email=email, phone=phone, about=about, aboutcomp=aboutcomp, projects=projects)
+    def update_page(self, university=None, email=None, phone=None, about=None, company=None, aboutcomp=None, projects=None):
+        page = self.model(university=university, email=email, phone=phone, about=about, company=company, aboutcomp=aboutcomp, projects=projects)
         page.save(self._db)
 class professorManager():
     def update_page(self, university=None, email=None, phone=None, about=None, classes=None):
@@ -95,6 +95,11 @@ class Engineer(models.Model):
     about = models.CharField(
         default=" ",
         max_length=100000,
+        null=True
+    )
+    company = models.CharField(
+        default=" ",
+        max_length=100,
         null=True
     )
     aboutcomp = models.CharField(

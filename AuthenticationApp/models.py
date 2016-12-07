@@ -11,15 +11,16 @@ from ProjectsApp.models import Project
 
 # Create your models here.
 class MyUserManager(BaseUserManager):
-    def create_user(self, email=None, uname=None, password=None, first_name=None, last_name=None,
+    def create_user(self, email=None, uname=None, password=None, first_name=None, last_name=None, school=None, comp=None,
     		is_student=None, is_professor=None, is_engineer=None, bookmarks=None):
         if not email:
             raise ValueError('Users must have an email address')
-        if not uname:
-            raise ValueError('Users must have a uname')
         #We can safetly create the user
         #Only the email field is required
-        user = self.model(email=email, uname=uname, first_name=first_name, last_name=last_name, bookmarks=bookmarks)
+        user = self.model(email=email, uname=uname, first_name=first_name, last_name=last_name, school=school, comp=comp)
+        user.save()
+        user.bookmarks.add(bookmarks)
+        user.save()
         user.set_password(password)
 
         #If first_name is not present, set it as email's username by default
@@ -41,23 +42,23 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email=None, uname=None, password=None, first_name=None, last_name=None, bookmarks=None):
-        user = self.create_user(email, uname, password=password, first_name=first_name, last_name=last_name,
+    def create_superuser(self, email=None, uname=None, password=None, first_name=None, last_name=None, school=None, bookmarks=None):
+        user = self.create_user(email, uname, password=password, first_name=first_name, last_name=last_name, school=school, 
         	is_student=None, is_professor=None, is_engineer=None, bookmarks = bookmarks)
         user.is_admin = True
         user.save(using=self._db)
         return user
 
-    def create_student(self, email=None, uname=None, password=None,first_name=None, last_name=None, bookmarks=None):
-        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
+    def create_student(self, email=None, uname=None, password=None,first_name=None, last_name=None, school=None, bookmarks=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name, school=school,
     	is_student=True, is_professor=False, is_engineer=False, bookmarks=bookmarks)
 
-    def create_professor(self, email=None, uname=None, password=None,first_name=None, last_name=None, bookmarks=None):
-        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
+    def create_professor(self, email=None, uname=None, password=None,first_name=None, last_name=None, school=None, bookmarks=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name, school=school, 
     	is_student=False, is_professor=True, is_engineer=False, bookmarks=bookmarks)
 
-    def create_engineer(self, email=None, uname=None, password=None,first_name=None, last_name=None, bookmarks=None):
-        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name,
+    def create_engineer(self, email=None, uname=None, password=None,first_name=None, last_name=None, school=None, bookmarks=None, comp=None):
+        return self.create_user(email, uname, password=password,first_name=first_name, last_name=last_name, school=school, comp=comp,
     	is_student=False, is_professor=False, is_engineer=True, bookmarks=bookmarks)
 
 
@@ -86,6 +87,18 @@ class MyUser(AbstractBaseUser):
     	blank=True,
     	)
 
+    school = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        )
+
+    comp = models.CharField(
+        max_length= 200,
+        null=True,
+        blank=True,
+        )
+
     is_active = models.BooleanField(default=True,)
     is_admin = models.BooleanField(default=False,)
 
@@ -94,7 +107,7 @@ class MyUser(AbstractBaseUser):
     is_professor = models.BooleanField(default=False,)
     is_engineer = models.BooleanField(default=False,)    
 
-    bookmarks = models.ManyToManyField(Project)
+    bookmarks = models.ManyToManyField(Project, blank=True)
         
 
     objects = MyUserManager()

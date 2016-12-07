@@ -7,12 +7,18 @@
             <img src="/{{ company.photo }}" alt="Company Image" width=150/>
 			<h3>{{ company.name }}</h3>
 			<p>{{ company.description }}</p>
-            <h5><a href="{{ company.website }}">Website</a></h5>
-            {% if userIsMember %}
-            <a href="/company/unjoin?name={{ company.name }}" class="btn btn-default">Unjoin this Company</a>
-            {% else %}
-            <a href="/company/join?name={{ company.name }}" class="btn btn-default">Join this Company</a>
-            {% endif %}
+      <h5><a href="{{ company.website }}">Website</a></h5>
+      {% if userIsMember %}
+      <a href="/company/unjoin?name={{ company.name }}" class="btn btn-default">Unjoin this Company</a>
+      {% elif user.is_engineer %}
+      <a href="/company/join?name={{ company.name }}" class="btn btn-default">Join this Company</a>
+      {% endif %}
+			<br>
+			<br>
+			<a href="/company/projects?name={{ company.name }}" class="btn btn-primary">View Company Projects</a>
+			{% if userIsMember %}
+			<a href="/company/project/add?name={{ company.name }}" class="btn btn-primary">Search Projects</a>
+			{% endif %}
 		</div>
     </div>
     <div class="container" role="main">

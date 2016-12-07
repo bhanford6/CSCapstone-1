@@ -5,6 +5,12 @@
 	<!-- Content -->
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
+			{% if userIsMember %}
+				<a style="float:right;background-color:red;" class="btn btn-primary" href="/group/remove?name={{ group.name }}">Remove Group</a>
+			{% endif %}
+			{% if userIsMember and user.is_engineer %}
+				<a style="margin-right:15px;float:right" class="btn btn-primary" href="/group/assign?name={{ group.name }}">Assign Project</a>
+			{% endif %}
 			<h1>{{ group.name }}</h1>
 			<p>{{ group.description }}</p>
 			{% if userIsMember %}
@@ -16,6 +22,9 @@
 			<br>
 			<a href="/group/projects?name={{ group.name }}" class="btn btn-primary">Browse Projects</a>
 			<a style="margin-left:15px;"href="/group/members?name={{ group.name }}" class="btn btn-primary">Members</a>
+			<br>
+			<br>
+			<p style="font-size:14px;">*** To Join Group, Ask A Group Member To Add You ***</p>
 		</div>
 	</div>
 	

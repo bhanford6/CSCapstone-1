@@ -64,8 +64,7 @@ class UpdateForm(forms.ModelForm):
     print "model: "
     class Meta:
         model = MyUser       
-        fields = ('email', 'uname', 'password', 'first_name', 'last_name',
-            'is_student', 'is_professor', 'is_engineer')
+        fields = ('email', 'uname', 'password', 'first_name', 'last_name','school', 'is_student', 'is_professor', 'is_engineer')
 
     def clean_password(self):            
         return self.initial["password"]        
@@ -102,7 +101,8 @@ class UpdateForm(forms.ModelForm):
         if first_name is None or first_name == "" or first_name == '':  
             email = self.cleaned_data.get("email")                               
             return email[:email.find("@")]      
-        return first_name     
+        return first_name    
+
 
     def clean_is_student(self):
         is_student = self.cleaned_data.get("is_student")

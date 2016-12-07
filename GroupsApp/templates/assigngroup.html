@@ -1,0 +1,32 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			{% if company == None %}
+				<p>You must be associated with a company to assign a project to a group. Your possible options: </p>
+				<ul>
+					<li>Create a new Company and Project.</li>
+					<li>Find a company to join with current projects.</li>
+					<li>Double check that you correctly typed in your company's name in your profile</li>
+				</ul>
+			</div>
+			<a href="/company/form" class="btn btn-primary">Create Company</a>
+			<a href="/company/all" class="btn btn-primary">Browse Companies</a>
+			<a href="/user?name={{ user.uname }}" class="btn btn-primary">View Profile</a>
+			{% elif project == None %}
+				<p>Your company does not appear to have an ongoing project that matches your project. <a href="UNKNOWN">Create a Company Project</a> to assign your project to a group</p>
+			</div>
+			{% else %}
+				<p>{{ group }} has now been assigned to {{ company }}'s project: {{ project }}. Good Luck!</p>
+			</div>
+			<a href="/group?name={{ group }}" class="btn btn-primary">View Group</a>
+			<a href="/company?name={{ company }}" class="btn btn-primary">View Company</a>
+			<a href="/project?name={{ project }}" class="btn btn-primary">View Project</a>
+			<a href="/" class="btn btn-primary">Home</a>
+			{% endif %}
+	</div>
+
+
+{% endblock %}

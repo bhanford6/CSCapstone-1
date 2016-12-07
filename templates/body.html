@@ -50,10 +50,13 @@
 						  Create<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
+							{% if user.is_engineer %}
 							<li><a href="/company/form">Create Company</a></li>
-							<li><a href="/university/form">Create University</a></li>
-							<li><a href="/group/form">Create Group</a></li>
 							<li><a href="/project/form">Create Project</a></li>
+							{% elif user.is_professor %}
+							<li><a href="/university/form">Create University</a></li>
+							{% endif %}
+							<li><a href="/group/form">Create Group</a></li>
 						</ul>
 					</li>
 					<li><a href="/comments">Comments</a></li>

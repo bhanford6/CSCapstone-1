@@ -3,7 +3,14 @@
 {% block content %}
 
 	<!-- Content -->
-	{% if is_student == True %}
+	{% if user_page == None %}
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<p>{{ first_name }} has not set up a profile page yet.</p>
+		</div>
+		<a href="/" class="btn btn-primary">Return Home</a>
+	</div>
+	{% elif is_student == True %}
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ first_name }} {{ last_name }}</h1>

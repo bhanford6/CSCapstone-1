@@ -10,6 +10,9 @@
 			{% else %}
 			<a style="float:right;"class="btn btn-primary"href="/project/book?name={{ project.name }}">Bookmark</a>
 			{% endif %}
+			{% if projHasComp and userInComp and member != None %}
+				<a style="float:right;"class="btn btn-primary"href="/project/remove?name={{ project.name }}">Remove Project</a>
+			{% endif %}
 			<h1>{{ project.name }}</h1>
 			<p>{{ project.description }}</p>
 		</div>

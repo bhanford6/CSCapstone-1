@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^group/members$', views.membersGroup, name='GMembers'),
     url(r'^group/members/add$', views.addMembers, name='AddMembers'),
     url(r'^group/member/add$', views.addMember, name='AddMember'),
+    url(r'^group/remove$', views.remove, name='Remove'),
+    url(r'^group/assign$', views.assignGroup, name='AssignGroup'),
 ]

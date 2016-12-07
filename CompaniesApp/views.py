@@ -7,6 +7,7 @@ from django.shortcuts import render
 
 from . import models
 from . import forms
+from ProjectsApp.models import Project
 
 def getCompanies(request):
     if request.user.is_authenticated():
@@ -19,14 +20,16 @@ def getCompanies(request):
     return render(request, 'autherror.html')
 
 def getCompany(request):
+    print "why am I here?"
     if request.user.is_authenticated():
         in_name = request.GET.get('name', 'None')
-        print in_name
         in_company = models.Company.objects.get(name__exact=in_name)
         is_member = in_company.members.filter(email__exact=request.user.email)
+        user = request.user
         context = {
             'company' : in_company,
             'userIsMember': is_member,
+            'user' : user,
         }
         return render(request, 'company.html', context)
     # render error page if user is not logged in
@@ -91,4 +94,41 @@ def unjoinCompany(request):
         }
         return render(request, 'company.html', context)
     return render(request, 'autherror.html')
-    
+   
+def getCompProjects(request):
+    print "entered"
+    if request.user.is_authenticated():
+        print "into"
+        in_name = reques.GET.get('name', 'None')
+        in_company = models.Company.objects.get(name__exact=in_name)
+        project_list = in_company.projects
+        is_member = in_company.members.filter(email__exact=request.user.email)
+        user = request.user
+        
+        context = {
+            'company'       : in_company,
+            'projects'      : project_list,
+            'userIsMember'  : is_member,
+            'user'          : user,
+        }
+        return render(request, 'companyprojects.html', context)
+    return render(request, 'autherror.html')
+
+def addProject(request):
+    print "entered"
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_company = models.Company.objects.get(name__exact=in_name)
+        project_list = Project.objects.all()
+        is_member = in_company.members.filter(email__exact=request.user.email)
+        user = request.user
+        context = {
+            'company'       : in_company,
+            'projects'      : project_list,
+            'userIsMember'  : is_member,
+            'user'          : user,
+        }
+        return render(request, 'addproject.html', context)
+    return render(request, 'autherror.html')
+
+

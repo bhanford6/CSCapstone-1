@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^project/unbook$', views.getUnbookProject, name='ProjectUnbook'),
     url(r'^project/form$', views.getAddProject, name='GetAddProject'),
     url(r'^addproject$', views.addProject, name='AddProject'),
-    
+    url(r'^project/remove', views.removeProject, name='RemoveProject'),    
 ]
