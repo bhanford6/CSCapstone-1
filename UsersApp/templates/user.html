@@ -12,11 +12,15 @@
 		</div>
 		<h3>About {{ user.first_name }}</h3>
 		<br>
+		{% autoescape off %}
 		<p>{{ user_page.about }}
+		{% endautoescape %}
 		<br>
 		<h3>Skills and Attributes</h3>
 		<br>
-		<ul>{{ user_page.skills }}</ul>
+		{% autoescape off %}
+		<p>{{ user_page.skills }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>
@@ -32,7 +36,9 @@
 		<p style="width:60%;margin-left:15px">{{ user_page.about }}</p>
 		<br>
 		<h3>Classes</h3>
+		{% autoescape off %}
 		<ul>{{ user_page.classes }}</ul>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>
@@ -45,7 +51,12 @@
 		</div>
 		<h3>About {{ user.get_full_name }}</h3>
 		<br>
+		{% autoescape off %}
 		<p style="width:60%;margin-left:15px;">{{ user_page.about }}</p>
+		<br>
+		<h3>Company</h3>
+		<br>
+		<p style="width:60%;margin-left:15px;">{{ user_page.company }}</p>
 		<br>
 		<h3>About Company</h3>
 		<br>
@@ -54,6 +65,7 @@
 		<h3>Past Projects</h3>
 		<br>
 		<p style="width:60%;margin-left:15px;">{{ user_page.projects }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>

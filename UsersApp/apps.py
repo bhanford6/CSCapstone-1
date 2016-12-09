@@ -1,7 +1,9 @@
-from __future__ import unicode_literals
+"""ProjectsApp Apps
 
+Created by Harris Christiansen on 10/02/16.
+"""
 from django.apps import AppConfig
 
 
-class UsersappConfig(AppConfig):
-    name = 'UsersApp'
+class CSCapstoneConfig(AppConfig):
+    name = 'CSCapstone'

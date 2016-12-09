@@ -1,0 +1,16 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<div class="container theme-showcase" role="main">
+	<div class="jumbotron">
+		<p>{{ project.name }} has been added to {{ company.name }}'s project list</p>
+	</div>
+	<br>
+	<a class="btn btn-primary" href="/company?name={{ company.name }}">Back To Company</a>
+	<a style="margin-left:15px;"class="btn btn-primary" href="/company/projects?name={{ company.name }}">Company Projects</a>
+	<a style="margin-left:15px;"class="btn btn-primary" href="/">Home</a>
+	</div>
+
+
+{% endblock %}

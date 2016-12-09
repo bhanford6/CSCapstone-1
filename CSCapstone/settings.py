@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'CSCapstoneApp',
     'ProjectsApp',
@@ -44,11 +45,16 @@ INSTALLED_APPS = [
     'GroupsApp',
     'UniversitiesApp',
     'CommentsApp',
-    'StudentApp',
-    'ProfessorApp',
     'UsersApp',
+    'tinymce',
+    'django_wysiwyg',
+    'threadedcomments',
+    'django_comments',
 ]
 
+COMMENTS_APP = 'threadedcomments'
+
+DJANGO_WYSIWYG_FLAVOR = "tinymce"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

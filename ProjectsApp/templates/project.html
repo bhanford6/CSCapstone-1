@@ -5,18 +5,32 @@
 	<!-- Content -->
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
+			{% if bookmarked %}
+			<a style="float:right;background-color:red"class="btn btn-primary"href="/project/unbook?name={{ project.name }}">UnBookmark</a>
+			{% else %}
+			<a style="float:right;"class="btn btn-primary"href="/project/book?name={{ project.name }}">Bookmark</a>
+			{% endif %}
+			<br>
+			<br>
+			{% if projHasComp and userInComp %}
+				<a style="background-color:red;float:right;"class="btn btn-primary"href="/project/remove?name={{ project.name }}">Remove Project</a>
+			{% endif %}
 			<h1>{{ project.name }}</h1>
+			{% autoescape off %}
 			<p>{{ project.description }}</p>
+			{% endautoescape %}
 		</div>
 		<h3>Duration:</h3>
 		<p>Start Date:{{ project.start }}</p>
 		<p>End Date:{{ project.end }}</p>
 		<br>
 		<h3>Required Experience:</h3>
+		{% autoescape off %}
 		<p>{{ project.experience }}</p>
 		<br>
 		<h3>Expected Skills:</h3>
 		<p>{{ project.knowledge }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 

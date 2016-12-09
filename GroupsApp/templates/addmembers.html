@@ -27,7 +27,7 @@
 						{% else %}
 						<td> </td>
 						{% endif %}
-						<td>university</td>
+						<td>{{ user.school }}</td>
 						<td><a href="/group/member/add?name={{ group.name }}&id={{ user.id }}">Add</a></td>
 					</tr>
 					{% endfor %}

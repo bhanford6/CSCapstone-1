@@ -1,0 +1,42 @@
+{% extends "body.html" %}
+
+{% block content %}
+	
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue;">Bookmarked Projects</h2>
+			<a class="btn btn-primary" href="/project/all">Search Projects</a>
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="cursor:pointer;">Project Name</th>
+						<th style="cursor:pointer;">Start Date</th>
+						<th style="cursor:pointer;">End Date</th>
+						<th style="cursor:pointer;">Description</th>
+						<th style="cursor:pointer;">Previous Knowledge</th>
+						<th style="cursor:pointer;">Experience</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for project in projects %}
+					<tr>
+						<td><a href="/project?name={{ project.name }}">{{ project.name }}</a></td>
+						<td>{{ project.start }}</td>
+						<td>{{ project.end }}</td>
+						{% autoescape off %}
+						<td>{{ project.description }}</td>
+						<td>{{ project.knowledge }}</td>
+						<td>{{ project.experience }}</td>
+						{% endautoescape %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	
+		<br>
+		<br>
+	</div>
+
+{% endblock %}

@@ -8,6 +8,7 @@ For more information please see:
 from django.conf.urls import url, include
 from django.contrib import admin
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('AuthenticationApp.urls')),
@@ -17,7 +18,7 @@ urlpatterns = [
     url(r'^', include('GroupsApp.urls')),
     url(r'^', include('UniversitiesApp.urls')),
     url(r'^', include('CommentsApp.urls')),
-    url(r'^', include('StudentApp.urls')),
-    url(r'^', include('ProfessorApp.urls')),
     url(r'^', include('UsersApp.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^articles/comments/', include('django_comments.urls')),
 ]

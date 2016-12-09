@@ -17,4 +17,12 @@ urlpatterns = [
     url(r'^group/members$', views.membersGroup, name='GMembers'),
     url(r'^group/members/add$', views.addMembers, name='AddMembers'),
     url(r'^group/member/add$', views.addMember, name='AddMember'),
+    url(r'^group/remove$', views.remove, name='Remove'),
+    url(r'^group/assign$', views.assignGroup, name='AssignGroup'),
+    url(r'^group/assigned$', views.assignedGroup, name='AssignedGroup'),
+    url(r'^group/projects/recommended$', views.recProject, name='RecommendedProjects'),
+    url(r'^group/request$', views.requestJoin, name='RequestJoin'),
+    url(r'^group/comments$', views.groupComments, name='GroupComments'),
+    url(r'^group/comment/form$', views.groupCommentForm, name='GroupCommentForm'),
+    url(r'^group/addcomment$', views.groupAddComment, name='GroupAddComment'),
 ]

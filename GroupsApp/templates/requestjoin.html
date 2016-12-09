@@ -1,0 +1,14 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<div class="container theme-showcase" role="main">
+	<div class="jumbotron">
+		<p>Request to join {{ group.name }} has been sent!</p>
+	</div>
+	<br>
+	<a class="btn btn-primary" href="/group?name={{ group.name }}">Back To Group</a>
+	<a style="margin-left:15px;"class="btn btn-primary" href="/">Home</a>
+	</div>
+
+{% endblock %}

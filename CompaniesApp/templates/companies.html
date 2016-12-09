@@ -18,7 +18,9 @@
                     <tr>
                         <td><a href="/company?name={{ item.name }}"><img src="/{{ item.photo }}" alt="Company Image" width=50/></a></td>
                         <td><a href="/company?name={{ item.name }}">{{ item.name }}</a></td>
+												{% autoescape off %}
                         <td>{{ item.description }}</td>
+												{% endautoescape %}
                     </tr>
                     {% endfor %}
 				</tbody>

@@ -5,6 +5,7 @@ Created by Jacob Dunbar on 10/2/2016.
 """
 from django.db import models
 from AuthenticationApp.models import MyUser
+from ProjectsApp.models import Project
 
 # Create your models here.
 class Company(models.Model):
@@ -13,6 +14,6 @@ class Company(models.Model):
     description = models.CharField(max_length=300)
     website=models.CharField(max_length=300, default="/")
     members = models.ManyToManyField(MyUser)
-    
+    projects = models.ManyToManyField(Project)
     def __str__(self):
         return self.name

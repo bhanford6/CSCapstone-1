@@ -3,8 +3,12 @@ import sys
 import re
 from . import models
 from . import forms
-from .models import Student
+#from .models import Student
 from AuthenticationApp.models import MyUser
+from ProjectsApp.models import Project
+from forms import SearchForm
+from UsersApp.models import Student
+
 # Create your views here.
 
 class identity():
@@ -12,7 +16,7 @@ class identity():
 
 # Display table of all professors
 def getProfessors(request):
-    professors_list = MyUser.objects.get(is_professor=True)
+    professors_list = MyUser.objects.filter(is_professor=True)
     context = {
         'professors' : professors_list
     }
@@ -20,7 +24,7 @@ def getProfessors(request):
 
 # Display table of all students
 def getStudents(request):
-    students_list = MyUser.objects.get(is_student=True)
+    students_list = MyUser.objects.filter(is_student=True)
     context = {
         'students' : students_list
     }
@@ -28,9 +32,9 @@ def getStudents(request):
 
 # Display table of all engineers
 def getEngineers(request):
-    engineers_list = MyUser.objects.get(is_engineer=True)
+    engineers_list = MyUser.objects.filter(is_engineer=True)
     context= {
-        'engineers' : engineers_list
+        'engineers' : engineers_list,
     }
     return render(request, 'engineers.html', context)
 
@@ -42,12 +46,18 @@ def getUsers(request):
     }
     return render(request, 'users.html', context)
 
+def getBookmarks(request):
+    booked = request.user.bookmarks.all()
+    context = {
+        'projects'  : booked
+    }
+    return render(request, 'bookmarks.html', context)
+    
+
 # Form to edit user's profile page
 def getUserForm(request):
     email = request.user.email
-    r = re.compile("(@?[^@]+)")
-    tup = r.findall(email)
-    unique_name = tup[0]
+    unique_name = request.user.uname 
     try:
         if request.user.is_student:
             cur_stud = models.Student.objects.get(ident__exact=request.user.id)
@@ -55,6 +65,7 @@ def getUserForm(request):
             cur_prof = models.Professor.objects.get(ident__exact=request.user.id)
         elif request.user.is_engineer:
             cur_eng = models.Engineer.objects.get(ident__exact=request.user.id)
+            print "worked?"
     except:
         cur_stud = None
         cur_prof = None
@@ -69,8 +80,9 @@ def getUserForm(request):
         # then update instead of creating a new student object
         print "why you come here?"
         form = forms.StudentForm(request.POST)
+        print form.errors
         if form.is_valid() and cur_stud==None:
-            student = models.Student(
+            student = Student(
                 ident=request.user.id,
                 university=form.cleaned_data['university'],
                 email=form.cleaned_data['email'],
@@ -136,6 +148,7 @@ def getUserForm(request):
                 email=form.cleaned_data['email'],
                 phone=form.cleaned_data['phone'],
                 about=form.cleaned_data['about'],
+                company=form.cleaned_data['company'],
                 aboutcomp=form.cleaned_data['aboutcomp'],
                 projects=form.cleaned_data['projects'],
             )
@@ -146,8 +159,9 @@ def getUserForm(request):
             cur_eng.email=form.cleaned_data['email']
             cur_eng.phone=form.cleaned_data['phone']
             cur_eng.about=form.cleaned_data['about']
+            cur_eng.company=form.cleaned_data['company']
             cur_eng.aboutcomp=form.cleaned_data['aboutcomp']
-            cur_eng.projects=form.clenaed_data['projects']
+            cur_eng.projects=form.cleaned_data['projects']
             cur_eng.save()
         engineer_attr = models.Engineer.objects.all()
         context = {
@@ -183,6 +197,7 @@ def getUserForm(request):
                 'email'         : cur_eng.email,
                 'phone'         : cur_eng.phone,
                 'about'         : cur_eng.about,
+                'company'       : cur_eng.company,
                 'aboutcomp'     : cur_eng.aboutcomp,
                 'projects'      : cur_eng.projects,
             })
@@ -199,19 +214,27 @@ def getUserForm(request):
 def getUser(request):
     if request.user.is_authenticated():
         email = request.user.email
-        r = re.compile("(@?[^@]+)")
-        tup = r.findall(email)
-        unique_name = tup[0]
+        unique_name = request.user.uname 
         uname = request.GET.get('name','None')
-        user = MyUser.objects.get(uname__exact=uname)
+        user = MyUser.objects.get(uname__exact=unique_name)
         print user.email
         if user.is_student:
-            user_page = models.Student.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Student.objects.get(ident__exact=user.id)
+            except:
+                return getUserForm(request)
         elif user.is_professor:
-            user_page = models.Professor.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Professor.objects.get(ident__exact=user.id)
+            except: 
+                return getUserForm(request)
         elif user.is_engineer:
-            user_page = models.Engineer.objects.get(ident__exact=user.id)
+            try:
+                user_page = models.Engineer.objects.get(ident__exact=user.id)
+            except:
+                return getUserForm(request)
         print user_page
+        print user_page.about
         context = {
             'user_page'     : user_page,
             'user'          : user,
@@ -227,19 +250,25 @@ def getUser(request):
 def getOtherUser(request):
     in_name = request.GET.get('name', 'None')
     other_user =  MyUser.objects.get(uname__exact=in_name)
-    r = re.compile("(@?[^@]+)")
-    tup = r.findall(other_user.email)
-    unique_name = tup[0]
-    user = MyUser.objects.get(uname__exact=unique_name)
-    if user.is_student:
-        user_page = models.Student.objects.get(ident__exact=user.id)
-    elif user.is_professor:
-        user_page = models.Professor.objects.get(ident__exact=user.id)
-    elif user.is_engineer:
-        user_page = models.Engineer.objects.get(ident__exact=user.id)
+    user = request.user
+    if other_user.is_student:
+        try:
+            user_page = models.Student.objects.get(ident__exact=other_user.id)
+        except:
+            user_page = None
+    elif other_user.is_professor:
+        try:
+            user_page = models.Professor.objects.get(ident__exact=other_user.id)
+        except:
+            user_page = None
+    elif other_user.is_engineer:
+        try:
+            user_page = models.Engineer.objects.get(ident__exact=other_user.id)
+        except:
+            user_page = None
     context = {
         'user_page'     : user_page,
-        'uname'         : unique_name,
+        'uname'         : in_name,
         'first_name'    : other_user.first_name,
         'last_name'     : other_user.last_name,
         'is_student'    : other_user.is_student,
@@ -248,9 +277,25 @@ def getOtherUser(request):
     }
     return render(request, 'otheruser.html', context)
 
-
-
-
-
-
+def filteredUsers(request):
+    if request.user.is_authenticated():
+    #if request.method == 'POST':
+        #form = SearchForm(request.POST)
+        #print form.errors
+       # if form.is_valid():
+#        searched = form.cleaned_data['input_str']
+        searched = request.GET.get('searched')
+        print searched
+        users = MyUser.objects.all()
+        first_names = users.filter(first_name__exact=searched)
+        last_names = users.filter(last_name__exact=searched)
+        emails = users.filter(last_name__exact=searched)
+        results = set().union(first_names, last_names, emails)
+        print first_names
+        print results
+        context = {
+            'results'   : results
+        }
+        return render(request, 'filteredusers.html', context)
+    return render(request, 'autherror.html')
 

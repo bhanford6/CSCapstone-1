@@ -18,7 +18,9 @@
 					{% for item in groups %}
 					<tr>
 						<td><a href="/group?name={{ item.name }}">{{ item.name }}</a></td>
+						{% autoescape off %}
 						<td>{{ item.description }}</td>
+						{% endautoescape %}
 					</tr>
 					{% endfor %}
 				</tbody>

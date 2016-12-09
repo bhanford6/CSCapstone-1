@@ -3,7 +3,14 @@
 {% block content %}
 
 	<!-- Content -->
-	{% if is_student == True %}
+	{% if user_page == None %}
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<p>{{ first_name }} has not set up a profile page yet.</p>
+		</div>
+		<a href="/" class="btn btn-primary">Return Home</a>
+	</div>
+	{% elif is_student == True %}
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<h1>{{ first_name }} {{ last_name }}</h1>
@@ -11,11 +18,13 @@
 		</div>
 		<h3>About {{ first_name }}</h3>
 		<br>
+		{% autoescape off %}
 		<p style="margin-left:15px;">{{ user_page.about }}
 		<br>
 		<h3>Skills and Attributes</h3>
 		<br>
 		<p style="margin-left:15px;">{{ user_page.skills }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>
@@ -28,11 +37,13 @@
 		</div>
 		<h3>About Professor {{ last_name }}</h3>
 		<br>
+		{% autoescape off %}
 		<p style="margin-left:15px;">{{ user_page.about }}</p>
 		<br>
 		<h3>Classes</h3>
 		<br>
 		<p style="margin-left:15px;">{{ user_page.classes }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>
@@ -45,7 +56,12 @@
 		</div>
 		<h3>About {{ first_name }} {{ last_name }}</h3>
 		<br>
+		{% autoescape off %}
 		<p style="margin-left:15px;">{{ user_page.about }}</p>
+		<br>
+		<h3>Company</h3>
+		<br>
+		<p style="margin-left:15px;">{{ user_page.company }}</p>
 		<br>
 		<h3>About Company</h3>
 		<br>
@@ -54,6 +70,7 @@
 		<h3>Past Projects</h3>
 		<br>
 		<p style="margin-left:15px;">{{ user_page.projects }}</p>
+		{% endautoescape %}
 		<br>
 		<br>
 	</div>

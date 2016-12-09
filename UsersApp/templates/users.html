@@ -5,6 +5,10 @@
 	<div class="container" role="main">
 		<div class="table-responsive">
 			<h2 style="color:blue">All Users</h2>
+			<form method="post" enctype="multipart/form-data" action="/user/all/filter" class="panel-body validate"> {% csrf_token %}
+				<input name="searched" for="input_str" style="margin:3px;float:right"type="submit" value="Search" class="btn btn-primary">
+				<input style="margin:3px;float:right;width:200px;"type="text" name="search" id="search" placeholder="Search User" class="form-control">
+			</form>
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
@@ -16,7 +20,7 @@
 				<tbody>
 					{% for user in users %}
 					<tr id="row" style="cursor:pointer">
-						<td><a href="/user/other?name={{ user.get_uname }}">{{ user.get_full_name }}</a></td>
+						<td><a href="/user/other?name={{ user.uname }}">{{ user.get_full_name }}</a></td>
 						{% if user.is_student == True %}
 						<td>Student</td>
 						{% elif user.is_professor == True %}
@@ -26,7 +30,7 @@
 						{% else %}
 						<td> </td>
 						{% endif %}
-
+						<td> {{ user.school }} </td>
 					</tr>
 					{% endfor %}
 				</tbody>

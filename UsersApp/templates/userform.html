@@ -20,20 +20,23 @@
 			<input style="text-indent:10px;height:32px;width:300px;border:1px solid#cccccc;border-radius:3px;" type="tel" name="phone" id="phone" placeholder="(123) 456-7890" >
 			<br>
 			<br>
-
+			{% autoescape off %}
 			<label for="about">About Me</label>
 			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
 			<br>
-
+			{% endautoescape %}
+			{% autoescape off %}
 			<label for="skills">Skills and Attributes</label>
 			<textarea style="width:75%"rows="4" name="skills" id="skills" placeholder="Java, Windows, SQL, ..." class="form-control"></textarea>
 			<br>
+			{% endautoescape %}
 			<input type="submit" value="Save Changes" class="btn btn-primary">
+			<a href="/user?name={{ uname }}" class="btn btn-primary">View Page</a>
 			<br>
-			</form>
+			</form><!--
 			<form method="post" action="/user?name={{ uname }}" class="panel-body validate">{% csrf_token %}
 				<input type="submit" value="View Page" class="btn btn-primary">
-			</form>
+			</form>-->
 		</div>
 	</div>
 
@@ -64,11 +67,12 @@
 			<br>
 
 			<input type="submit" value="Save Changes" class="btn btn-primary">
+			<a href="/user?name={{ uname }}" class="btn btn-primary">View Page</a>
 			<br>
-			</form>
+			</form><!--
 			<form method="post" action="/user?name={{ uname }}" class="panel-body validate"> {% csrf_token %}
 				<input type="submit" value="View Page" class="btn btn-primary">
-			</form>
+			</form>-->
 		</div>
 	</div>
 
@@ -94,6 +98,10 @@
 			<textarea style="width:75%"rows="5" name="about" id="about" placeholder="Tell Us About Yourself" class="form-control"></textarea>
 			<br>
 
+			<label for="company">Company</label>
+			<input style="width:300px;" type="text"  name="company" id="company" placeholder="Must Match Company Name Exactly" class="form-control">
+			<br>
+
 			<label for="aboutcomp">About Company</label>
 			<textarea style="width:75%"rows="5" name="aboutcomp" id="aboutcomp" placeholder="Tell Us About Your Company" class="form-control"></textarea>
 			<br>
@@ -103,11 +111,13 @@
 			<br>
 
 			<input type="submit" value="Save Changes" class="btn btn-primary">
+			<a href="/user?name={{ uname }}" class="btn btn-primary">View Page</a>
 			<br>
 			</form>
+			<!--
 			<form method="post" action="/user?name={{ uname }}" class="panel-body validate"> {% csrf_token %}
 				<input type="submit" value="View Page" class="btn btn-primary">
-			</form>
+			</form>-->
 		</div>
 	</div>
 

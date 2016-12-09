@@ -1,0 +1,46 @@
+{% extends "body.html" %}
+
+{% block content %}
+	
+	<!-- Content -->
+	<div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue;">Recommended Projects</h2>
+			{% if user.is_engineer %}
+			<a class="btn btn-primary" href="/project/form">New Project</a>
+			{% endif %}
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="cursor:pointer;">Matches</th>
+						<th style="cursor:pointer;">Project Name</th>
+						<th style="cursor:pointer;">Start Date</th>
+						<th style="cursor:pointer;">End Date</th>
+						<th style="cursor:pointer;">Description</th>
+						<th style="cursor:pointer;">Previous Knowledge</th>
+						<th style="cursor:pointer;">Experience</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for project in projRanks %}
+					<tr>
+						<td>{{ project.1 }}</td>
+						<td><a href="/project?name={{ project.0.name }}">{{ project.0.name }}</a></td>
+						<td>{{ project.0.start }}</td>
+						<td>{{ project.0.end }}</td>
+						{% autoescape off %}
+						<td>{{ project.0.description }}</td>
+						<td>{{ project.0.knowledge }}</td>
+						<td>{{ project.0.experience }}</td>
+						{% endautoescape %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	
+		<br>
+		<br>
+	</div>
+
+{% endblock %}

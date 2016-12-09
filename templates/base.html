@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
 	<title>{% block title %}{% endblock %}CS Capstone Marketplace</title>
 	<link REL="icon" HREF="{% static "images/fav.png" %}">
 
@@ -33,7 +32,23 @@
 	
 	<!-- Site CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static "css/site.css" %}">
-</head><body>
+	<script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+	<script>tinymce.init({
+		forced_root_block: false,
+		selector: 'textarea',
+		menubar: false,
+		plugins: [
+			'advlist autolink lists link image charmap print preview anchor',
+			'searchreplace visualblocks code fullscreen',
+			'insertdatetime media table contextmenu paste code'
+		],
+		toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+		content_css: '//www.tinymce.com/css/codepen.min.css',
+		height: 150,
+		width: 800,
+	});</script>
+</head>
+	<body>
 	{% block body %}{% endblock %}
 
 	<!--- Javascript  -->

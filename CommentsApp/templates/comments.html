@@ -13,8 +13,13 @@
                 <tbody>
                    {% for item in comments %}
                    <tr>
+									 		 {% autoescape off %}
                        <td>{{ item.time }}</td>
                        <td>{{ item.comment }}</td>
+											 {% endautoescape %}
+											 {% if user.is_student and user.is_engineer and user.is_professor %}
+											 <td><a href="/comment/remove?id={{ item.id }}">Remove</a></td>
+											 {% endif %}
                    </tr>
                    {% endfor %}
                 </tbody>

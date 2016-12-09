@@ -5,37 +5,82 @@
 	<!-- Content -->
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
+			{% if userIsMember %}
+				<a style="float:right;background-color:red;" class="btn btn-primary" href="/group/remove?name={{ group.name }}">Remove Group</a>
+				<br><br>
+				<a style="float:right;" class="btn btn-primary" href="/group/comments?name={{ group.name }}">Comments</a>
+			{% endif %}
+			{% if userIsMember and user.is_engineer and project == None%}
+				<a style="margin-right:15px;float:right" class="btn btn-primary" href="/group/assign?name={{ group.name }}">Assign Project</a>
+			{% endif %}
 			<h1>{{ group.name }}</h1>
 			<p>{{ group.description }}</p>
 			{% if userIsMember %}
 			<a href="/group/unjoin?name={{ group.name }}" class="btn btn-default">Unjoin this Group</a>
-			{% else %}
-			<a href="/group/join?name={{ group.name }}" class="btn btn-default">Join this Group</a>
+			<!--
+			<a href="/group/join?name={{ group.name }}" class="btn btn-default">Join this Group</a>-->
 			{% endif %}
 			<br>
 			<br>
 			<a href="/group/projects?name={{ group.name }}" class="btn btn-primary">Browse Projects</a>
-			<a style="margin-left:15px;"href="/group/members?name={{ group.name }}" class="btn btn-primary">Members</a>
+			<br><br>
+			<a href="/group/members?name={{ group.name }}" class="btn btn-primary">Members</a>
+			<br>
+			<br>
+			{% if userIsMember %}
+			<a href="/group/projects/recommended?name={{ group.name }}" class="btn btn-primary">Recommended Projects</a>
+			<br>
+			<br>
+			{% endif %}
+			{% if not userIsMember %}
+			<a href="/group/request?name={{ group.name }}" class="btn btn-default">Request To Join</a>
+			{% endif %}
 		</div>
 	</div>
 	
 	<div class="container">
 		<div class="table-responsive">
+			{% if project != None %}
+			<h2>Group Project: {{ project.name }}</h2>
+			<h3>About</h3>
+			<br>
+			<p>{{ project.description }}</p>
+			<br>
+			<br>
+			<h3>Skills</h3>
+			<br>
+			<p>{{ project.knowledge }}</p>
+			<br>
+			<br>
+			{% endif %}
 			<table class="table table-striped sortable">
 				<thead>
 					<tr>
-						<th>Members</th>
+						<th style="width:10%;cursor:pointer">Members</th>
+						<th style="width:10%;cursor:pointer">Status</th>
+						<th style="width:50%;cursor:pointer">University</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for item in group.members.all %}
+					{% for item in members %}
 					<tr>
-						<td>{{ item.get_full_name }}</td>
+						<td><a href="/user/other?name={{ item.get_uname }}">{{ item.get_full_name }}</a></td>
+						{% if item.is_student == True %}
+						<td>Student</td>
+						{% elif item.is_professor == True %}
+						<td>Professor</td>
+						{% elif item.is_engineer == True %}
+						<td>Engineer</td>
+						{% else %}
+						<td> </td>
+						{% endif %}
+						<td> {{ item.school }} </td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
-
+	<br>
+	<br>
 {% endblock %}

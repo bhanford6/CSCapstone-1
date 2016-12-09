@@ -1,0 +1,71 @@
+{% extends "body.html" %}
+
+{% block content %}
+
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			{% if company == None %}
+				<p>You must be associated with a company to assign a project to a group. Your possible options: </p>
+				<ul>
+					<li>Create a new Company and Project.</li>
+					<li>Find a company to join with current projects.</li>
+					<li>Double check that you correctly typed in your company's name in your profile</li>
+				</ul>
+			</div>
+			<a href="/company/form" class="btn btn-primary">Create Company</a>
+			<a href="/company/all" class="btn btn-primary">Browse Companies</a>
+			<a href="/user?name={{ user.uname }}" class="btn btn-primary">View Profile</a>
+			{% elif projects == None %}
+				<p>Your company does not appear to have an ongoing project that matches your project. <a href="/company/project/add?name={{ company }}">Create a Company Project</a> to assign your project to a group</p>
+			</div>
+			{% else %}
+		</div>
+	<div class="container" role="main">
+		<div class="table-responsive">
+			<h2 style="color:blue;">Projects</h2>
+			{% if user.is_engineer %}
+			<a class="btn btn-primary" href="/company/project/add?name={{ company.name }}">Add New Project</a>
+			{% endif %}
+			<table class="table table-striped sortable">
+				<thead>
+					<tr>
+						<th style="cursor:pointer;">Project Name</th>
+						<th style="cursor:pointer;">Start Date</th>
+						<th style="cursor:pointer;">End Date</th>
+						<th style="cursor:pointer;">Description</th>
+						<th style="cursor:pointer;">Previous Knowledge</th>
+						<th style="cursor:pointer;">Experience</th>
+						<th style="width:20%;cursor:pointer;">Assign</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for project in projects %}
+					<tr>
+						<td><a href="/project?name={{ project.name }}">{{ project.name }}</a></td>
+						<td>{{ project.start }}</td>
+						<td>{{ project.end }}</td>
+						<td>{{ project.description }}</td>
+						<td>{{ project.knowledge }}</td>
+						<td>{{ project.experience }}</td>
+						<td><a href="/group/assigned?name={{ group.name }}&project={{ project.name }}">Assign</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	
+		<br>
+		<br>
+	</div>
+<!--
+				<p>{{ group }} has now been assigned to {{ company }}'s project: {{ project }}. Good Luck!</p>
+			</div>
+			<a href="/group?name={{ group }}" class="btn btn-primary">View Group</a>
+			<a href="/company?name={{ company }}" class="btn btn-primary">View Company</a>
+			<a href="/project?name={{ project }}" class="btn btn-primary">View Project</a>
+			<a href="/" class="btn btn-primary">Home</a>-->
+			{% endif %}
+	</div>
+
+
+{% endblock %}
